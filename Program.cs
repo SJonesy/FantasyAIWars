@@ -43,7 +43,9 @@ namespace FantasyAIWars
 
             DisplayStatus(parties);
 
-            List<List<Action>> queuedActions = new List<List<Action>>();
+            List<Action>[] queuedActions = new List<Action>[TICK_LIMIT];
+            for (int i = 0; i < TICK_LIMIT; i++)
+                queuedActions[i] = new List<Action>();
 
             // Main Combat Loop
             for (int tick = 0; tick < TICK_LIMIT; tick++)
