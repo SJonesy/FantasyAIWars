@@ -16,7 +16,7 @@ namespace FantasyAIWars
             List<Party> parties = new List<Party>();
             foreach (var arg in args)
             {
-                var input = System.IO.File.ReadAllText(arg);
+                string input = System.IO.File.ReadAllText(arg);
                 var deserializer = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
                 parties.Add(deserializer.Deserialize<Party>(input));
             }
@@ -43,14 +43,54 @@ namespace FantasyAIWars
 
             DisplayStatus(parties);
 
-            List<List<CombatAction>> queuedActions = new List<List<CombatAction>>();
-            Dictionary<int, List<CombatAction>> actionMap = new Dictionary<int, List<CombatAction>>();
+            List<List<Action>> queuedActions = new List<List<Action>>();
 
             // Main Combat Loop
             for (int tick = 0; tick < TICK_LIMIT; tick++)
             {
-                if (tick % 20 == 0)
-                    DisplayStatus(parties);
+                if (tick % 20 == 0) {
+                    // DisplayStatus(parties);
+                }
+
+                // Do queued actions
+                foreach (var action in queuedActions[tick])
+                {
+                    if (!action.Actor.IsAlive)
+                        continue;
+                    
+                    // TODO: actually do actions
+
+                    action.Actor.RecoveryTurnsRemaining = 0;
+                    action.Actor.IsUsingAbility = false;
+                    action.Actor.AbilityInUse = Ability.Idle;
+                }
+
+                // Queue new actions
+                foreach (var party in parties)
+                {
+                    foreach (var character in party.Characters)
+                    {
+                        if (!character.IsAlive || character.IsUsingAbility || character.IsCasting)
+                            continue;
+
+                        if (character.RecoveryTurnsRemaining > 0)
+                        {
+                            character.RecoveryTurnsRemaining--;
+                            continue;
+                        }
+
+                        Action action = character.DecideAction(parties);
+                        if (action != null)
+                        {
+                            int nextAction = tick + (int)Math.Round(action.GetDelay() * (10.0 / action.Actor.Dexterity));
+                            if (nextAction <= tick)
+                                nextAction = tick + 1;
+                            queuedActions[nextAction].Add(action);
+                            action.Actor.IsUsingAbility = true;
+                            action.Actor.AbilityInUse = action.Ability;
+                        }
+                    }
+                }
             }
 
             Console.WriteLine("Tick limit exceeded; match was a draw.");

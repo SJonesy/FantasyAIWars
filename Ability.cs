@@ -2,6 +2,7 @@
 {
     public enum Ability
     {
+        Idle,
         Melee,
         Shield
     }

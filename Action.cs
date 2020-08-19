@@ -4,33 +4,43 @@ using System.Text;
 
 namespace FantasyAIWars
 {
-    class CombatAction
+    class Action
     {
         public Ability Ability;
         public Character Actor;
         public Character TargetCharacter;
         public Party TargetParty;
-        public int tick;
 
-        public CombatAction() { }
-        public CombatAction(Ability ability, Character actor, Character targetCharacter)
+        public Action() { }
+        public Action(Ability ability, Character actor, Character targetCharacter)
         {
             Ability = ability;
             Actor = actor;
             TargetCharacter = targetCharacter;
         }
 
-        public CombatAction(Ability ability, Character actor, Party targetParty)
+        public Action(Ability ability, Character actor, Party targetParty)
         {
             Ability = ability;
             Actor = actor;
             TargetParty = targetParty;
         }
 
-        public CombatAction(Ability ability, Character actor)
+        public Action(Ability ability, Character actor)
         {
             Ability = ability;
             Actor = actor;
+        }
+
+        public int GetDelay()
+        {
+            switch (Ability) 
+            {
+                case Ability.Melee:
+                    return 2;
+            }
+
+            return 0;
         }
     }
 }

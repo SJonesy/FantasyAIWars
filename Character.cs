@@ -1,6 +1,7 @@
 ﻿using Neo.IronLua;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Text;
 
 namespace FantasyAIWars
@@ -38,15 +39,16 @@ namespace FantasyAIWars
         public float EarthResist  = 1.0f;
 
         // Combat Variables
-        public bool isCasting      = false;
-        public bool isUsingAbility = false;
-        public bool isAlive        = true;
-        public bool isPoisoned     = false;
-        public bool isRegenerating = false;
-        public bool isRaging       = false;
-        public int regenValue             = 0;
-        public int poisonValue            = 0;
-        public int recoveryTurnsRemaining = 0;
+        public bool IsCasting      = false;
+        public bool IsUsingAbility = false;
+        public bool IsAlive        = true;
+        public bool IsPoisoned     = false;
+        public bool IsRegenerating = false;
+        public bool IsRaging       = false;
+        public int RegenValue             = 0;
+        public int PoisonValue            = 0;
+        public int RecoveryTurnsRemaining = 0;
+        public Ability AbilityInUse = Ability.Idle;
 
 
         public Character() { }
@@ -80,7 +82,7 @@ namespace FantasyAIWars
                 Name, HitPoints, MaxHitPoints, Mana, MaxMana, Race.ToString(), string.Join(", ", Abilities));
         }
 
-        public CombatAction DecideAction()
+        public Action DecideAction(List<Party> parties)
         {
             /* TODO: This is just here to remind me that I added LUA scripting support..
              * my plan is to load the LUA environment with data and functions, and that's
@@ -93,7 +95,7 @@ namespace FantasyAIWars
                 env.dochunk("function add(b) return b + 3; end;", "test.lua"); // Create a function in Lua
                 Console.WriteLine("Add(3) = {0}", env.add(3)); // Call the function in C#
             } */
-            return new CombatAction();
+            return null;
         }
     }
 }
