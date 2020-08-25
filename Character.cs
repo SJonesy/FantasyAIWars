@@ -5,7 +5,6 @@ using System.Diagnostics.Tracing;
 using System.Text;
 using YamlDotNet.Serialization;
 
-
 namespace FantasyAIWars
 {
     class Character
@@ -65,9 +64,9 @@ namespace FantasyAIWars
 
         private void ApplyRace()
         {
-            switch (Race)
+            switch (Race.Name)
             {
-                case Race.Human:
+                case "Human":
                     Strength += 2;
                     Intelligence += 2;
                     Dexterity += 2;

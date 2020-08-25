@@ -2,7 +2,7 @@
   "profiles": {
     "FantasyAIWars": {
       "commandName": "Project",
-      "commandLineArgs": "parties/dnd.party parties/dnd.party"
+      "commandLineArgs": "Parties/dnd.party Parties/dnd.party"
     }
   }
 }

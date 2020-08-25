@@ -18,11 +18,17 @@ namespace FantasyAIWars
                 where assemblyType.IsSubclassOf(typeof(Ability)) && !assemblyType.IsAbstract
                 select assemblyType
             ).ToArray();
+            var listOfRaces = (
+                from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
+                from assemblyType in domainAssembly.GetTypes()
+                where assemblyType.IsSubclassOf(typeof(Race)) && !assemblyType.IsAbstract
+                select assemblyType
+            ).ToArray();
             var deserializerBuilder = new DeserializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance);
-            foreach (var ability in listOfAbilities)
+            foreach (var type in listOfAbilities.Concat(listOfRaces))
             {
-                deserializerBuilder.WithTagMapping("!" + ability.Name, ability);
+                deserializerBuilder.WithTagMapping("!" + type.Name, type);
             }
             var deserializer = deserializerBuilder.Build();
 

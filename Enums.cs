@@ -1,7 +1,8 @@
 ﻿namespace FantasyAIWars
 {
-    public enum Race
+    public enum AbilityType
     {
-        Human
+        Passive,
+        Attack
     }
 }

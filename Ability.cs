@@ -1,15 +1,11 @@
-﻿using FantasyAIWars.Abilities;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.ObjectFactories;
-
-namespace FantasyAIWars
+﻿namespace FantasyAIWars
 {
     abstract class Ability
     {
-        public string Name;
+        public abstract string Name { get; }
+        public abstract int Delay { get; }
+        public abstract int Cooldown { get; }
+        public abstract AbilityType Type { get; }
 
         public override string ToString() 
         {

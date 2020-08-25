@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FantasyAIWars
+﻿namespace FantasyAIWars
 {
     class Action
     {
@@ -34,7 +30,7 @@ namespace FantasyAIWars
 
         public int GetDelay()
         {
-            return 0;
+            return Ability.Delay;
         }
     }
 }
