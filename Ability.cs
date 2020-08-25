@@ -16,12 +16,4 @@ namespace FantasyAIWars
             return Name;
         }
     }
-
-    public enum AbilityName
-    {
-        Idle,
-        Melee,
-        Shield
-    }
-
 }

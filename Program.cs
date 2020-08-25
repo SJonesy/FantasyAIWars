@@ -12,11 +12,12 @@ namespace FantasyAIWars
         static void Main(string[] args)
         {
             // Build YAML Parser
-            var listOfAbilities = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
-                                   from assemblyType in domainAssembly.GetTypes()
-                                   where assemblyType.IsSubclassOf(typeof(Ability)) && !assemblyType.IsAbstract
-                                   select assemblyType)
-                                   .ToArray();
+            var listOfAbilities = (
+                from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
+                from assemblyType in domainAssembly.GetTypes()
+                where assemblyType.IsSubclassOf(typeof(Ability)) && !assemblyType.IsAbstract
+                select assemblyType
+            ).ToArray();
             var deserializerBuilder = new DeserializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance);
             foreach (var ability in listOfAbilities)
