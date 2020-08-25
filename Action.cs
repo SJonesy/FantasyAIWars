@@ -34,12 +34,6 @@ namespace FantasyAIWars
 
         public int GetDelay()
         {
-            switch (Ability) 
-            {
-                case Ability.Melee:
-                    return 2;
-            }
-
             return 0;
         }
     }

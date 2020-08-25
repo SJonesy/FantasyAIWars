@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Text;
+using YamlDotNet.Serialization;
+
 
 namespace FantasyAIWars
 {
@@ -48,7 +50,7 @@ namespace FantasyAIWars
         public int RegenValue             = 0;
         public int PoisonValue            = 0;
         public int RecoveryTurnsRemaining = 0;
-        public Ability AbilityInUse = Ability.Idle;
+        public Ability AbilityInUse = null;
 
 
         public Character() { }

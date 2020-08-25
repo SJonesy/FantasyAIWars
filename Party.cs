@@ -7,6 +7,6 @@ namespace FantasyAIWars
     class Party
     {
         public string Name { get; set; }
-        public Character[] Characters { get; set; }
+        public List<Character> Characters { get; set; }
     }
 }

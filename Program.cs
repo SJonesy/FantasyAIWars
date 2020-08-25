@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using FantasyAIWars.Abilities;
+using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.CompilerServices;
+using System.Linq;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -12,14 +11,29 @@ namespace FantasyAIWars
     {
         static void Main(string[] args)
         {
+            // Build YAML Parser
+            var listOfAbilities = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
+                                   from assemblyType in domainAssembly.GetTypes()
+                                   where assemblyType.IsSubclassOf(typeof(Ability)) && !assemblyType.IsAbstract
+                                   select assemblyType)
+                                   .ToArray();
+            var deserializerBuilder = new DeserializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance);
+            foreach (var ability in listOfAbilities)
+            {
+                deserializerBuilder.WithTagMapping("!" + ability.Name, ability);
+            }
+            var deserializer = deserializerBuilder.Build();
+
             // Load Parties
             List<Party> parties = new List<Party>();
             foreach (var arg in args)
             {
                 string input = System.IO.File.ReadAllText(arg);
-                var deserializer = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
                 parties.Add(deserializer.Deserialize<Party>(input));
             }
+
+            // Pick combat type
             if (parties.Count == 2)
             {
                 Duel(parties);
@@ -64,7 +78,7 @@ namespace FantasyAIWars
 
                     action.Actor.RecoveryTurnsRemaining = 0;
                     action.Actor.IsUsingAbility = false;
-                    action.Actor.AbilityInUse = Ability.Idle;
+                    action.Actor.AbilityInUse = null;
                 }
 
                 // Queue new actions
