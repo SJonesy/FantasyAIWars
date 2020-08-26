@@ -15,6 +15,9 @@ namespace FantasyAIWars
         public List<Ability> Abilities { get; set; }
         public string Script { get; set; }
 
+        // For LUA Scripting
+        public int Index { get; set; }
+
         // Status
         public int MaxHitPoints = 70;
         public int HitPoints    = 0;
@@ -50,8 +53,9 @@ namespace FantasyAIWars
 
         public Character() { }
 
-        public bool Init()
+        public bool Init(int index)
         {
+            Index = index;
             ApplyRace();
             ApplyPassives();
             MaxHitPoints += Stats.Constitution * 3; // TODO: Am I happy with this?

@@ -10,7 +10,7 @@
 
         public abstract void DoAbility(Action action);
 
-        public void DoDamage(Character actor, Character target, float damage)
+        public int DoDamage(Character actor, Character target, float damage)
         {
             if      (this.DamageType == DamageType.Ice     ) damage = damage / actor.IceResist;
             else if (this.DamageType == DamageType.Fire    ) damage = damage / actor.FireResist;
@@ -26,6 +26,8 @@
 
             if (target.HitPoints <= 0)
                 target.IsAlive = false;
+
+            return (int)damage;
         }
 
         public override string ToString() 

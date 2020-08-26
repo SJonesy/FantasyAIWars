@@ -35,8 +35,12 @@ namespace FantasyAIWars
             }
 
             // Run Lua Script
+            env.lowestHealthFriendly = friendlyParty.Characters.FindAll(c => c.IsAlive).OrderByDescending(c => c.HitPoints).LastOrDefault();
+            env.lowestHealthEnemy = enemyParty.Characters.FindAll(c => c.IsAlive).OrderByDescending(c => c.HitPoints).LastOrDefault();
             env.enemyParty = new LuaTable();
+            env.enemyPartyCount = enemyParty.Characters.Count;
             env.friendlyParty = new LuaTable();
+            env.friendlyPartyCount = friendlyParty.Characters.Count;
             env.actor = actor;
             for (int i = 0; i < enemyParty.Characters.Count; i++)
                 env.enemyParty[i] = enemyParty.Characters[i];
@@ -66,8 +70,8 @@ namespace FantasyAIWars
         /* target should be one of the following:
          * enemyParty
          * friendlyParty
-         * enemy [#]
-         * friend [#]
+         * enemy #
+         * friend #
          */
         private Action CreateAction(Character actor, string abilityName, Party friendlyParty, Party enemyParty, string target="")
         {

@@ -11,6 +11,9 @@ namespace FantasyAIWars
 {
     class Program
     {
+        const int MAX_ABILITIES = 4;
+        const int MAX_PARTY_MEMBERS = 6;
+
         static void Main(string[] args)
         {
             // Build YAML Parser
@@ -42,6 +45,13 @@ namespace FantasyAIWars
                 parties.Add(deserializer.Deserialize<Party>(input));
             }
 
+            if (!IsValid(parties))
+            {
+                Console.WriteLine("One or more parties are not valid. Exiting.");
+                return;
+            }
+
+
             // Pick combat type
             if (parties.Count == 2)
             {
@@ -56,13 +66,43 @@ namespace FantasyAIWars
                 Console.WriteLine("You must run this with at least 2 parties");
             }
         }
+
+        private static bool IsValid(List<Party> parties)
+        {
+            foreach (var party in parties)
+            {
+                if (party.Characters.Count > MAX_PARTY_MEMBERS)
+                {
+                    Console.WriteLine("Each party may only have {0} members. {1} has {2} members.", MAX_PARTY_MEMBERS, party.Name, party.Characters.Count);
+                    return false;
+                }
+
+                foreach (var character in party.Characters)
+                {
+                    if (character.Abilities.Count > MAX_ABILITIES)
+                    {
+                        Console.WriteLine("Each character may only have {0} abilities. {1} has {2} abilites.", MAX_ABILITIES, character.Name, character.Abilities.Count);
+                        return false;
+                    }
+
+                    if (character.Abilities.Count() != character.Abilities.Distinct().Count())
+                    {
+                        Console.WriteLine("Character abilities must be unique. {1} has duplicate abilites.", character.Name);
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
         private static void Duel(List<Party> parties)
         {
             const int TICK_LIMIT = 1000;
 
             foreach (var party in parties)
-                foreach (var character in party.Characters)
-                    character.Init();
+                for (int i = 0; i < party.Characters.Count; i++)
+                    party.Characters[i].Init(i);
 
             DisplayStatus(parties);
 

@@ -3,16 +3,18 @@ characters:
   - name: Generic Character 1
     race: !Human {}
     abilities: 
-      - !Melee {}
+      - !Punch {}
       - !Shield {}
     script: |
-      if enemyParty[0].IsAlive then action = "melee,enemy 0" end
-      if enemyParty[1].IsAlive then action = "melee,enemy 1" end
+      for i=0,enemyPartyCount-1 do 
+        if enemyParty[i].IsAlive then action = "punch,enemy " .. tostring(i) end
+      end
   - name: Generic Character 2
     race: !Human {}
     abilities: 
-      - !Melee {}
+      - !Punch {}
       - !Shield {}
     script: |
-      if enemyParty[0].IsAlive then action = "melee,enemy 0" end
-      if enemyParty[1].IsAlive then action = "melee,enemy 1" end
+      for i=0,enemyPartyCount-1 do 
+        if enemyParty[i].IsAlive then action = "punch,enemy " .. tostring(i) end
+      end
