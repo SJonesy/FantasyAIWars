@@ -1,6 +1,8 @@
 ﻿using FantasyAIWars.Abilities;
+using Neo.IronLua;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -71,49 +73,98 @@ namespace FantasyAIWars
             // Main Combat Loop
             for (int tick = 0; tick < TICK_LIMIT; tick++)
             {
+                Console.Write("{0}: ", tick.ToString());
+
                 if (tick % 20 == 0) {
-                    // DisplayStatus(parties);
+                    DisplayStatus(parties);
                 }
 
                 // Do queued actions
                 foreach (var action in queuedActions[tick])
                 {
+                    Debug.WriteLine("Debug: {0} doing queued action {1}", action.Actor.Name, action.Ability.Name);
+
                     if (!action.Actor.IsAlive)
                         continue;
-                    
-                    // TODO: actually do actions
 
-                    action.Actor.RecoveryTurnsRemaining = 0;
+                    action.Ability.DoAbility(action);
+
+                    action.Actor.RecoveryTurnsRemaining = action.Ability.Cooldown;
                     action.Actor.IsUsingAbility = false;
                     action.Actor.AbilityInUse = null;
                 }
 
                 // Queue new actions
+                using ScriptEnvironment se = new ScriptEnvironment(parties, tick);
                 foreach (var party in parties)
                 {
-                    foreach (var character in party.Characters)
+                    foreach (var actor in party.Characters)
                     {
-                        if (!character.IsAlive || character.IsUsingAbility || character.IsCasting)
+                        if (!actor.IsAlive || actor.IsUsingAbility || actor.IsCasting)
                             continue;
 
-                        if (character.RecoveryTurnsRemaining > 0)
+                        if (actor.RecoveryTurnsRemaining > 0)
                         {
-                            character.RecoveryTurnsRemaining--;
+                            actor.RecoveryTurnsRemaining--;
                             continue;
                         }
 
-                        Action action = character.DecideAction(parties);
+                        Action action = se.DecideAction(actor);
                         if (action != null)
                         {
-                            int nextAction = tick + (int)Math.Round(action.GetDelay() * (10.0 / action.Actor.Dexterity));
+                            // TODO: this seems really powerful, maybe dex is OP here?
+                            int nextAction = tick + (int)Math.Round(action.GetDelay() * (10.0 / action.Actor.Stats.Dexterity));
                             if (nextAction <= tick)
                                 nextAction = tick + 1;
+                            if (nextAction >= TICK_LIMIT)
+                                continue;
                             queuedActions[nextAction].Add(action);
                             action.Actor.IsUsingAbility = true;
                             action.Actor.AbilityInUse = action.Ability;
                         }
                     }
                 }
+
+                // End of tick effects and cleanup
+                foreach (var party in parties)
+                {
+                    foreach (var character in party.Characters)
+                    {
+                        if (character.HitPoints <= 0)
+                            character.IsAlive = false;
+                    }
+                }
+
+                // Check for winner
+                List<Party> aliveParties = new List<Party>();
+                foreach (var party in parties)
+                {
+                    bool partyIsWiped = true;
+                    foreach (var character in party.Characters)
+                    {
+                        if (character.IsAlive)
+                        {
+                            partyIsWiped = false;
+                            break;
+                        }
+                    }
+                    if (!partyIsWiped)
+                        aliveParties.Add(party);
+                }
+                if (aliveParties.Count == 0)
+                {
+                    Console.WriteLine("Both parties have died! All characters are dead. The match is a tie.");
+                    DisplayStatus(parties);
+                    return;
+                }
+                else if (aliveParties.Count == 1)
+                {
+                    DisplayStatus(parties);
+                    Console.WriteLine("{0} has won!", aliveParties[0].Name);
+                    return;
+                }
+
+
             }
 
             Console.WriteLine("Tick limit exceeded; match was a draw.");

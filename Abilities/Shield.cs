@@ -10,11 +10,17 @@ namespace FantasyAIWars.Abilities
         public override int Delay { get; }
         public override int Cooldown { get; }
         public override AbilityType Type { get; }
+        public override DamageType DamageType { get; }
 
         public Shield()
         {
             this.Name = "Shield";
             this.Type = AbilityType.Passive;
+        }
+
+        public override void DoAbility(Action action)
+        {
+            action.Actor.PhysicalResist += .5f;
         }
     }
 }

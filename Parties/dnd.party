@@ -6,35 +6,13 @@ characters:
       - !Melee {}
       - !Shield {}
     script: |
-      function CreateArray(size, initValue = 0) {
-          result = {};
-          for (i = 0; i < size; i++) {
-              result[i] = initValue;
-          }
-          return result;
-      }
-
-      pattern = "CreateArray(5, 'Test')";
-      uniqueArray = Singleton(pattern);
-      uniqueArray[2] = "Extra";
-      arr = Singleton(pattern);
-      print("array=", arr); // {Test, Test, Extra, Test, Test}
+      if enemyParty[0].IsAlive then action = "melee,enemy 0" end
+      if enemyParty[1].IsAlive then action = "melee,enemy 1" end
   - name: Generic Character 2
     race: !Human {}
     abilities: 
       - !Melee {}
       - !Shield {}
     script: |
-      function CreateArray(size, initValue = 0) {
-          result = {};
-          for (i = 0; i < size; i++) {
-              result[i] = initValue;
-          }
-          return result;
-      }
-
-      pattern = "CreateArray(5, 'Test')";
-      uniqueArray = Singleton(pattern);
-      uniqueArray[2] = "Extra";
-      arr = Singleton(pattern);
-      print("array=", arr); // {Test, Test, Extra, Test, Test}
+      if enemyParty[0].IsAlive then action = "melee,enemy 0" end
+      if enemyParty[1].IsAlive then action = "melee,enemy 1" end

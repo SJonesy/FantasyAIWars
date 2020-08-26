@@ -22,22 +22,18 @@ namespace FantasyAIWars
         public int Mana         = 0;
 
         // Stats
-        public int Strength     = 10;
-        public int Dexterity    = 10;
-        public int Intelligence = 10;
-        public int Wisdom       = 10;
-        public int Charisma     = 10;
-        public int Constitution = 10;
+        public StatBlock Stats;
 
         // Resists
-        public float IceResist    = 1.0f;
-        public float FireResist   = 1.0f;
-        public float PoisonResist = 1.0f;
-        public float HolyResist   = 1.0f;
-        public float UnholyResist = 1.0f;
-        public float WaterResist  = 1.0f;
-        public float AirResist    = 1.0f;
-        public float EarthResist  = 1.0f;
+        public float IceResist      = 1.0f;
+        public float FireResist     = 1.0f;
+        public float PoisonResist   = 1.0f;
+        public float HolyResist     = 1.0f;
+        public float UnholyResist   = 1.0f;
+        public float WaterResist    = 1.0f;
+        public float AirResist      = 1.0f;
+        public float EarthResist    = 1.0f;
+        public float PhysicalResist = 1.0f;
 
         // Combat Variables
         public bool IsCasting      = false;
@@ -57,23 +53,25 @@ namespace FantasyAIWars
         public bool Init()
         {
             ApplyRace();
-            MaxHitPoints += Constitution * 3; // TODO: Am I happy with this?
+            ApplyPassives();
+            MaxHitPoints += Stats.Constitution * 3; // TODO: Am I happy with this?
             HitPoints = MaxHitPoints;
             return true;
         }
 
         private void ApplyRace()
         {
-            switch (Race.Name)
+            Stats = Race.Stats;
+        }
+
+        private void ApplyPassives()
+        {
+            foreach (var ability in Abilities)
             {
-                case "Human":
-                    Strength += 2;
-                    Intelligence += 2;
-                    Dexterity += 2;
-                    Constitution += 2;
-                    Charisma += 2;
-                    Wisdom += 2;
-                    break;
+                if (ability.Type == AbilityType.Passive)
+                {
+                    ability.DoAbility(new Action(ability, this));
+                }
             }
         }
 
@@ -87,15 +85,7 @@ namespace FantasyAIWars
         {
             /* TODO: This is just here to remind me that I added LUA scripting support..
              * my plan is to load the LUA environment with data and functions, and that's
-             * how I'll expose data to the LUA instead of needing any calls into the C#.
-            using (Lua lua = new Lua()) 
-            {
-                dynamic env = lua.CreateEnvironment(); // Create a environment
-                env.dochunk("a = 'Hallo World!';", "test.lua"); // Create a variable in Lua
-                Console.WriteLine(env.a); // Access a variable in C#
-                env.dochunk("function add(b) return b + 3; end;", "test.lua"); // Create a function in Lua
-                Console.WriteLine("Add(3) = {0}", env.add(3)); // Call the function in C#
-            } */
+             * how I'll expose data to the LUA instead of needing any calls into the C#. */
             return null;
         }
     }
