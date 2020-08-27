@@ -1,10 +1,5 @@
-﻿using Neo.IronLua;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using System.Text;
-using YamlDotNet.Serialization;
 
 namespace FantasyAIWars
 {
@@ -22,9 +17,9 @@ namespace FantasyAIWars
 
         // Status
         public int MaxHitPoints = 70;
-        public int HitPoints    = 0;
-        public int MaxMana      = 20;
-        public int Mana         = 0;
+        public int HitPoints = 0;
+        public int MaxMana = 20;
+        public int Mana = 0;
 
         // Stats
         public StatBlock Stats;
@@ -33,14 +28,14 @@ namespace FantasyAIWars
         public ResistBlock Resists;
 
         // Combat Variables
-        public bool IsCasting      = false;
+        public bool IsCasting = false;
         public bool IsUsingAbility = false;
-        public bool IsAlive        = true;
-        public bool IsPoisoned     = false;
+        public bool IsAlive = true;
+        public bool IsPoisoned = false;
         public bool IsRegenerating = false;
-        public bool IsRaging       = false;
-        public int RegenValue             = 0;
-        public int PoisonValue            = 0;
+        public bool IsRaging = false;
+        public int RegenValue = 0;
+        public int PoisonValue = 0;
         public int RecoveryTurnsRemaining = 0;
         public Ability AbilityInUse = null;
         public Character EngagedWith = null;
@@ -72,7 +67,7 @@ namespace FantasyAIWars
 
         public void DumpCharacterInfo()
         {
-            Console.WriteLine("{0} ({1}/{2}hp {3}/{4}mp)\tBuild: {5} [{6}]", 
+            Console.WriteLine("{0} ({1}/{2}hp {3}/{4}mp)\tBuild: {5} [{6}]",
                 Name, HitPoints, MaxHitPoints, Mana, MaxMana, Race.ToString(), string.Join(", ", Abilities));
         }
     }

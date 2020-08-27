@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FantasyAIWars
+﻿namespace FantasyAIWars
 {
     public class StatBlock
     {

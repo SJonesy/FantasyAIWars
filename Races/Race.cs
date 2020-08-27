@@ -1,13 +1,11 @@
-﻿using System.Runtime.InteropServices.ComTypes;
-
-namespace FantasyAIWars
+﻿namespace FantasyAIWars
 {
     abstract class Race
     {
         public abstract string Name { get; }
         public abstract StatBlock Stats { get; }
         public abstract ResistBlock Resists { get; }
-        
+
         public virtual void Apply(Character character)
         {
             character.Stats = this.Stats;

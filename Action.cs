@@ -1,6 +1,4 @@
-﻿using FantasyAIWars.Abilities;
-
-namespace FantasyAIWars
+﻿namespace FantasyAIWars
 {
     class Action
     {

@@ -73,7 +73,7 @@ namespace FantasyAIWars
          * enemy #
          * friend #
          */
-        private Action CreateAction(Character actor, string abilityName, Party friendlyParty, Party enemyParty, string target="")
+        private Action CreateAction(Character actor, string abilityName, Party friendlyParty, Party enemyParty, string target = "")
         {
             Ability ability = null;
             foreach (var abil in actor.Abilities)
@@ -105,7 +105,7 @@ namespace FantasyAIWars
                 else if (target.StartsWith("friend "))
                     return new Action(ability, actor, friendlyParty.Characters[Int32.Parse(target.Split(' ')[1])]);
             }
-            
+
 
             // Abilities without targets
             return new Action(ability, actor);

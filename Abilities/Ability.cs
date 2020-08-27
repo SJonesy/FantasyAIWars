@@ -32,14 +32,14 @@
 
         public int ModifyDamage(float damage, Character target)
         {
-                 if (this.DamageType == DamageType.Ice     ) damage /= target.Resists.Ice;
-            else if (this.DamageType == DamageType.Fire    ) damage /= target.Resists.Fire;
-            else if (this.DamageType == DamageType.Poison  ) damage /= target.Resists.Poison;
-            else if (this.DamageType == DamageType.Holy    ) damage /= target.Resists.Holy;
-            else if (this.DamageType == DamageType.Unholy  ) damage /= target.Resists.Unholy;
-            else if (this.DamageType == DamageType.Water   ) damage /= target.Resists.Water;
-            else if (this.DamageType == DamageType.Air     ) damage /= target.Resists.Air;
-            else if (this.DamageType == DamageType.Earth   ) damage /= target.Resists.Earth;
+            if (this.DamageType == DamageType.Ice) damage /= target.Resists.Ice;
+            else if (this.DamageType == DamageType.Fire) damage /= target.Resists.Fire;
+            else if (this.DamageType == DamageType.Poison) damage /= target.Resists.Poison;
+            else if (this.DamageType == DamageType.Holy) damage /= target.Resists.Holy;
+            else if (this.DamageType == DamageType.Unholy) damage /= target.Resists.Unholy;
+            else if (this.DamageType == DamageType.Water) damage /= target.Resists.Water;
+            else if (this.DamageType == DamageType.Air) damage /= target.Resists.Air;
+            else if (this.DamageType == DamageType.Earth) damage /= target.Resists.Earth;
             else if (this.DamageType == DamageType.Physical) damage /= target.Resists.Physical;
 
             return (int)damage;
@@ -52,7 +52,7 @@
 
         public virtual void OnQueue(Action action) { }
 
-        public override string ToString() 
+        public override string ToString()
         {
             return Name;
         }

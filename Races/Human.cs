@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FantasyAIWars.Races
+﻿namespace FantasyAIWars.Races
 {
     class Human : Race
     {

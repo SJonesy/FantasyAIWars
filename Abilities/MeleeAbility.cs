@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Drawing;
-using System.Text;
 using Console = Colorful.Console;
 
 namespace FantasyAIWars.Abilities
@@ -20,7 +17,7 @@ namespace FantasyAIWars.Abilities
             }
             else
             {
-                Console.WriteLine("{0} moves to engage {1}, but {2} intercepts him!", 
+                Console.WriteLine("{0} moves to engage {1}, but {2} intercepts him!",
                     action.Actor.Name, action.TargetCharacter.Name, action.TargetCharacter.IsGuardedBy.Name);
                 action.TargetCharacter = action.TargetCharacter.IsGuardedBy;
             }

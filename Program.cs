@@ -1,6 +1,4 @@
-﻿using FantasyAIWars.Abilities;
-using Neo.IronLua;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -114,7 +112,8 @@ namespace FantasyAIWars
                 //Uncomment for tick debugging
                 //Console.Write("{0}: ", tick.ToString());
 
-                if (tick % 20 == 0) {
+                if (tick % 20 == 0)
+                {
                     DisplayStatus(parties);
                 }
 
@@ -227,7 +226,7 @@ namespace FantasyAIWars
             Console.WriteLine();
         }
 
-        private static void Brawl(List<Party> parties) 
+        private static void Brawl(List<Party> parties)
         {
             Console.WriteLine("Brawl mode (more than 2 parties) is not currently implemented.");
         }
