@@ -4,7 +4,7 @@ using Console = Colorful.Console;
 
 namespace FantasyAIWars.Abilities
 {
-    class Punch : Ability
+    class Punch : MeleeAbility
     {
         public override string Name { get; }
         public override int Delay { get; }
@@ -15,9 +15,9 @@ namespace FantasyAIWars.Abilities
         public Punch()
         {
             Name = "Punch";
-            Delay = 1;
-            Cooldown = 3;
-            Type = AbilityType.Attack;
+            Delay = 7;
+            Cooldown = 2;
+            Type = AbilityType.Melee;
             DamageType = DamageType.Physical;
         }
 
@@ -26,9 +26,11 @@ namespace FantasyAIWars.Abilities
             System.Random random = new System.Random();
             int damage = random.Next(1, 6);
             damage += action.Actor.Stats.Strength - 10;
-            damage = DoDamage(action.Actor, action.TargetCharacter, damage);
-            string output = String.Format("{0} punches {1} right in the mouth for {2} damage.", action.Actor.Name, action.TargetCharacter.Name, damage);
-            Console.WriteLine(output, Color.Gray);
+            int modifiedDamage = ModifyDamage(damage, action.TargetCharacter);
+            DoDamage(action.Actor, action.TargetCharacter, modifiedDamage, true);
+
+            string output = String.Format("{0} punches {1} right in the mouth for {2} damage.", action.Actor.Name, action.TargetCharacter.Name, modifiedDamage);
+            Console.WriteLine(output);
         }
     }
 }

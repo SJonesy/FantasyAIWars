@@ -4,7 +4,8 @@
     {
         Neutral,
         Passive,
-        Attack
+        Attack,
+        Melee
     }
 
     public enum DamageType

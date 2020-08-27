@@ -1,5 +1,6 @@
 ﻿using Neo.IronLua;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Text;
@@ -15,8 +16,9 @@ namespace FantasyAIWars
         public List<Ability> Abilities { get; set; }
         public string Script { get; set; }
 
-        // For LUA Scripting
-        public int Index { get; set; }
+        // For LuA Scripting
+        public int CharacterIndex { get; set; }
+        public int PartyIndex { get; set; }
 
         // Status
         public int MaxHitPoints = 70;
@@ -28,15 +30,7 @@ namespace FantasyAIWars
         public StatBlock Stats;
 
         // Resists
-        public float IceResist      = 1.0f;
-        public float FireResist     = 1.0f;
-        public float PoisonResist   = 1.0f;
-        public float HolyResist     = 1.0f;
-        public float UnholyResist   = 1.0f;
-        public float WaterResist    = 1.0f;
-        public float AirResist      = 1.0f;
-        public float EarthResist    = 1.0f;
-        public float PhysicalResist = 1.0f;
+        public ResistBlock Resists;
 
         // Combat Variables
         public bool IsCasting      = false;
@@ -49,23 +43,20 @@ namespace FantasyAIWars
         public int PoisonValue            = 0;
         public int RecoveryTurnsRemaining = 0;
         public Ability AbilityInUse = null;
-
+        public Character EngagedWith = null;
+        public Character IsGuardedBy = null;
 
         public Character() { }
 
-        public bool Init(int index)
+        public bool Init(int partyIndex, int characterIndex)
         {
-            Index = index;
-            ApplyRace();
+            PartyIndex = partyIndex;
+            CharacterIndex = characterIndex;
+            Race.Apply(this);
             ApplyPassives();
             MaxHitPoints += Stats.Constitution * 3; // TODO: Am I happy with this?
             HitPoints = MaxHitPoints;
             return true;
-        }
-
-        private void ApplyRace()
-        {
-            Stats = Race.Stats;
         }
 
         private void ApplyPassives()
@@ -83,14 +74,6 @@ namespace FantasyAIWars
         {
             Console.WriteLine("{0} ({1}/{2}hp {3}/{4}mp)\tBuild: {5} [{6}]", 
                 Name, HitPoints, MaxHitPoints, Mana, MaxMana, Race.ToString(), string.Join(", ", Abilities));
-        }
-
-        public Action DecideAction(List<Party> parties)
-        {
-            /* TODO: This is just here to remind me that I added LUA scripting support..
-             * my plan is to load the LUA environment with data and functions, and that's
-             * how I'll expose data to the LUA instead of needing any calls into the C#. */
-            return null;
         }
     }
 }

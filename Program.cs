@@ -100,11 +100,9 @@ namespace FantasyAIWars
         {
             const int TICK_LIMIT = 1000;
 
-            foreach (var party in parties)
-                for (int i = 0; i < party.Characters.Count; i++)
-                    party.Characters[i].Init(i);
-
-            DisplayStatus(parties);
+            for (int i = 0; i < parties.Count; i++)
+                for (int j = 0; j < parties[i].Characters.Count; j++)
+                    parties[i].Characters[j].Init(i, j);
 
             List<Action>[] queuedActions = new List<Action>[TICK_LIMIT];
             for (int i = 0; i < TICK_LIMIT; i++)
@@ -113,13 +111,15 @@ namespace FantasyAIWars
             // Main Combat Loop
             for (int tick = 0; tick < TICK_LIMIT; tick++)
             {
-                Console.Write("{0}: ", tick.ToString());
+                //Uncomment for tick debugging
+                //Console.Write("{0}: ", tick.ToString());
 
                 if (tick % 20 == 0) {
                     DisplayStatus(parties);
                 }
 
                 // Do queued actions
+                // TODO: order actions by actors' dex
                 foreach (var action in queuedActions[tick])
                 {
                     Debug.WriteLine("Debug: {0} doing queued action {1}", action.Actor.Name, action.Ability.Name);
@@ -152,12 +152,12 @@ namespace FantasyAIWars
                         Action action = se.DecideAction(actor);
                         if (action != null)
                         {
-                            // TODO: this seems really powerful, maybe dex is OP here?
                             int nextAction = tick + (int)Math.Round(action.GetDelay() * (10.0 / action.Actor.Stats.Dexterity));
                             if (nextAction <= tick)
                                 nextAction = tick + 1;
                             if (nextAction >= TICK_LIMIT)
                                 continue;
+                            action.Ability.OnQueue(action);
                             queuedActions[nextAction].Add(action);
                             action.Actor.IsUsingAbility = true;
                             action.Actor.AbilityInUse = action.Ability;
@@ -213,6 +213,8 @@ namespace FantasyAIWars
 
         private static void DisplayStatus(List<Party> parties)
         {
+            Console.WriteLine();
+            Console.WriteLine("============================================================================");
             foreach (var party in parties)
             {
                 Console.WriteLine("Party: {0}", party.Name);
@@ -220,8 +222,9 @@ namespace FantasyAIWars
                 {
                     character.DumpCharacterInfo();
                 }
-                Console.WriteLine();
             }
+            Console.WriteLine("============================================================================");
+            Console.WriteLine();
         }
 
         private static void Brawl(List<Party> parties) 

@@ -32,7 +32,7 @@ namespace FantasyAIWars
 
         public int GetDelay()
         {
-            return Ability.Delay;
+            return Ability.GetDelay(this);
         }
     }
 }

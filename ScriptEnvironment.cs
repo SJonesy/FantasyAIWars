@@ -106,6 +106,7 @@ namespace FantasyAIWars
                     return new Action(ability, actor, friendlyParty.Characters[Int32.Parse(target.Split(' ')[1])]);
             }
             
+
             // Abilities without targets
             return new Action(ability, actor);
         }

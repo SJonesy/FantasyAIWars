@@ -8,6 +8,7 @@ namespace FantasyAIWars.Races
     {
         public override string Name { get; }
         public override StatBlock Stats { get; }
+        public override ResistBlock Resists { get; }
 
         public Human()
         {
@@ -19,6 +20,8 @@ namespace FantasyAIWars.Races
             Stats.Wisdom = 12;
             Stats.Charisma = 12;
             Stats.Constitution = 12;
+
+            Resists = new ResistBlock();
         }
     }
 }

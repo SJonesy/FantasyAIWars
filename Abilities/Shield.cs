@@ -20,7 +20,7 @@ namespace FantasyAIWars.Abilities
 
         public override void DoAbility(Action action)
         {
-            action.Actor.PhysicalResist += .5f;
+            action.Actor.Resists.Physical += .5f;
         }
     }
 }
