@@ -1,36 +1,36 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
 using Console = Colorful.Console;
 
 namespace FantasyAIWars.Abilities
 {
-    class Punch : MeleeAbility
+    class HeavyCrossbow : Ability
     {
         public override string Name { get; }
         public override int Delay { get; }
         public override int Cooldown { get; }
         public override AbilityType Type { get; }
         public override DamageType DamageType { get; }
-        public override int EngagedDelay { get; }
 
-        public Punch()
+        public HeavyCrossbow()
         {
-            Name = "Punch";
-            Delay = 8;
-            EngagedDelay = 2;
-            Cooldown = 1;
-            Type = AbilityType.Melee;
+            Name = "HeavyCrossbow";
+            Delay = 2;
+            Cooldown = 10;
+            Type = AbilityType.Attack;
             DamageType = DamageType.Physical;
         }
 
         public override void DoAbility(Action action)
         {
-            int damage = action.Actor.Random.Next(1, 5);
-            damage += action.Actor.Stats.Strength - 12;
+            int damage = action.Actor.Random.Next(25, 50);
             int modifiedDamage = ModifyDamage(damage, action.TargetCharacter);
             DoDamage(action.Actor, action.TargetCharacter, modifiedDamage, true);
 
-            string output = String.Format("{0} punches {1} right in the mouth for {2} damage.", action.Actor.Name, action.TargetCharacter.Name, modifiedDamage);
-            Console.WriteLine(output);
+            string output = String.Format("{0} shoots his heavy crossbow at {1} for {2}hp and begins to slowly reload.", action.Actor.Name, action.TargetCharacter.Name, modifiedDamage);
+            Console.WriteLine(output, Color.PaleVioletRed);
         }
     }
 }

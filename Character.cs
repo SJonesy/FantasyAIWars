@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using Console = Colorful.Console;
 
 namespace FantasyAIWars
 {
@@ -11,14 +13,15 @@ namespace FantasyAIWars
         public List<Ability> Abilities { get; set; }
         public string Script { get; set; }
 
-        // For LuA Scripting
+        // Internal/Scripting
         public int CharacterIndex { get; set; }
         public int PartyIndex { get; set; }
+        public Random Random { get; set; }
 
         // Status
         public int MaxHitPoints = 70;
         public int HitPoints = 0;
-        public int MaxMana = 20;
+        public int MaxMana = 60;
         public int Mana = 0;
 
         // Stats
@@ -34,6 +37,7 @@ namespace FantasyAIWars
         public bool IsPoisoned = false;
         public bool IsRegenerating = false;
         public bool IsRaging = false;
+        public bool Interrupted = false;
         public int RegenValue = 0;
         public int PoisonValue = 0;
         public int RecoveryTurnsRemaining = 0;
@@ -43,14 +47,17 @@ namespace FantasyAIWars
 
         public Character() { }
 
-        public bool Init(int partyIndex, int characterIndex)
+        public bool Init(int partyIndex, int characterIndex, Random random)
         {
             PartyIndex = partyIndex;
             CharacterIndex = characterIndex;
+            Random = random;
             Race.Apply(this);
             ApplyPassives();
             MaxHitPoints += Stats.Constitution * 3; // TODO: Am I happy with this?
             HitPoints = MaxHitPoints;
+            MaxMana += Stats.Intelligence * 4;
+            Mana = MaxMana;
             return true;
         }
 
@@ -67,8 +74,10 @@ namespace FantasyAIWars
 
         public void DumpCharacterInfo()
         {
+            Color outputColor = this.IsAlive ? Color.Gray : Color.DarkRed;
+
             Console.WriteLine("{0} ({1}/{2}hp {3}/{4}mp)\tBuild: {5} [{6}]",
-                Name, HitPoints, MaxHitPoints, Mana, MaxMana, Race.ToString(), string.Join(", ", Abilities));
+                Name, HitPoints, MaxHitPoints, Mana, MaxMana, Race.ToString(), string.Join(", ", Abilities), outputColor);
         }
     }
 }

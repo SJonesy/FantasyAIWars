@@ -1,0 +1,134 @@
+﻿name: Monks
+characters:
+  - name: Monk 1
+    race: !Human {}
+    abilities: 
+      - !Punch {}
+      - !Shield {}
+      - !Athletic {}
+      - !Heal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      if actor.EngagedWith and actor.EngagedWith.IsAlive then
+        action = "punch,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+        return
+      end
+      for i=0,enemyPartyCount-1 do 
+        if enemyParty[i].IsAlive then 
+          action = "punch,enemy " .. tostring(i)
+          return
+        end
+      end
+  - name: Monk 2
+    race: !Human {}
+    abilities: 
+      - !Punch {}
+      - !Shield {}
+      - !Athletic {}
+      - !Heal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      if actor.EngagedWith and actor.EngagedWith.IsAlive then
+        action = "punch,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+        return
+      end
+      for i=0,enemyPartyCount-1 do 
+        if enemyParty[i].IsAlive then 
+          action = "punch,enemy " .. tostring(i)
+          return
+        end
+      end
+  - name: Monk 3
+    race: !Human {}
+    abilities: 
+      - !Punch {}
+      - !Shield {}
+      - !Athletic {}
+      - !Heal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      if actor.EngagedWith and actor.EngagedWith.IsAlive then
+        action = "punch,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+        return
+      end
+      for i=0,enemyPartyCount-1 do 
+        if enemyParty[i].IsAlive then 
+          action = "punch,enemy " .. tostring(i)
+          return
+        end
+      end
+  - name: Monk 4
+    race: !Human {}
+    abilities: 
+      - !Punch {}
+      - !Shield {}
+      - !Athletic {}
+      - !Heal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      if actor.EngagedWith and actor.EngagedWith.IsAlive then
+        action = "punch,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+        return
+      end
+      for i=0,enemyPartyCount-1 do 
+        if enemyParty[i].IsAlive then 
+          action = "punch,enemy " .. tostring(i)
+          return
+        end
+      end
+  - name: Monk 5
+    race: !Human {}
+    abilities: 
+      - !Punch {}
+      - !Shield {}
+      - !Athletic {}
+      - !Heal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      if actor.EngagedWith and actor.EngagedWith.IsAlive then
+        action = "punch,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+        return
+      end
+      for i=0,enemyPartyCount-1 do 
+        if enemyParty[i].IsAlive then 
+          action = "punch,enemy " .. tostring(i)
+          return
+        end
+      end
+  - name: Monk 6
+    race: !Human {}
+    abilities: 
+      - !Punch {}
+      - !Shield {}
+      - !Athletic {}
+      - !Heal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      if actor.EngagedWith and actor.EngagedWith.IsAlive then
+        action = "punch,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+        return
+      end
+      for i=0,enemyPartyCount-1 do 
+        if enemyParty[i].IsAlive then 
+          action = "punch,enemy " .. tostring(i)
+          return
+        end
+      end

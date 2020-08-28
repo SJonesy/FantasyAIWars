@@ -6,6 +6,8 @@ namespace FantasyAIWars.Abilities
 {
     abstract class MeleeAbility : Ability
     {
+        public abstract int EngagedDelay { get; }
+
         public override void OnQueue(Action action)
         {
             if (action.TargetCharacter == action.Actor.EngagedWith)
@@ -30,7 +32,7 @@ namespace FantasyAIWars.Abilities
             {
                 Debug.WriteLine("MeleeAbility.GetDelay: LastTarget(Party:{0}, Index: {1}) TargetCharacter(Party: {2}, Index: {3})",
                     action.Actor.EngagedWith.PartyIndex, action.Actor.EngagedWith.CharacterIndex, action.TargetCharacter.PartyIndex, action.TargetCharacter.CharacterIndex);
-                return 2;
+                return EngagedDelay;
             }
             else
             {

@@ -1,0 +1,105 @@
+﻿name: Early Balance
+characters:
+  - name: Skeleton Tank
+    race: !Skeleton {}
+    abilities: 
+      - !Sword {}
+      - !Tough {}
+      - !Shield {}
+      - !Athletic {}
+    script: |
+      if actor.EngagedWith and actor.EngagedWith.IsAlive then
+        action = "Sword,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+        return
+      end
+      action = "Sword,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Heal Brawler 1
+    race: !Human {}
+    abilities: 
+      - !Sword {}
+      - !Shield {}
+      - !Athletic {}
+      - !BurstHeal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 30 then
+        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      if actor.EngagedWith and actor.EngagedWith.IsAlive then
+        action = "Sword,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+        return
+      end
+      action = "Sword,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Heal Brawler 2
+    race: !Human {}
+    abilities: 
+      - !Sword {}
+      - !Shield {}
+      - !Athletic {}
+      - !BurstHeal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 30 then
+        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      if actor.EngagedWith and actor.EngagedWith.IsAlive then
+        action = "Sword,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+        return
+      end
+      action = "Sword,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Heal Brawler 3
+    race: !Human {}
+    abilities: 
+      - !Sword {}
+      - !Shield {}
+      - !Athletic {}
+      - !BurstHeal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 30 then
+        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      if actor.EngagedWith and actor.EngagedWith.IsAlive then
+        action = "Sword,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+        return
+      end
+      action = "Sword,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Heal Brawler 4
+    race: !Human {}
+    abilities: 
+      - !Sword {}
+      - !Shield {}
+      - !Athletic {}
+      - !BurstHeal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 30 then
+        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      if actor.EngagedWith and actor.EngagedWith.IsAlive then
+        action = "Sword,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+        return
+      end
+      action = "Sword,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Dwarf Catcher
+    race: !Dwarf {}
+    abilities: 
+      - !BurstHeal {}
+      - !Shield {}
+      - !Heal {}
+      - !HeavyCrossbow {}
+    script: |
+      for i=0,enemyPartyCount-1 do 
+        if enemyParty[i].IsCasting 
+          then action = "HeavyCrossbow,enemy " .. i
+          return
+        end
+      end
+      if lowestHealthFriendly.HitPoints < lowestHealthFriendly.MaxHitPoints - 50 then
+        action = "burstheal,friend " .. tostring(lowestHealthFriendly.CharacterIndex)
+        return
+      end
+      if lowestHealthFriendly.HitPoints < lowestHealthFriendly.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(lowestHealthFriendly.CharacterIndex)
+        return
+      end

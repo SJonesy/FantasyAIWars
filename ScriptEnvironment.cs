@@ -35,8 +35,8 @@ namespace FantasyAIWars
             }
 
             // Run Lua Script
-            env.lowestHealthFriendly = friendlyParty.Characters.FindAll(c => c.IsAlive).OrderByDescending(c => c.HitPoints).LastOrDefault();
-            env.lowestHealthEnemy = enemyParty.Characters.FindAll(c => c.IsAlive).OrderByDescending(c => c.HitPoints).LastOrDefault();
+            env.lowestHealthFriendly = friendlyParty.Characters.FindAll(c => c.IsAlive).OrderBy(c => c.HitPoints).FirstOrDefault();
+            env.lowestHealthEnemy = enemyParty.Characters.FindAll(c => c.IsAlive).OrderBy(c => c.HitPoints).FirstOrDefault();
             env.enemyParty = new LuaTable();
             env.enemyPartyCount = enemyParty.Characters.Count;
             env.friendlyParty = new LuaTable();

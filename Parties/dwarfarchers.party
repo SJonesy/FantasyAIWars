@@ -1,0 +1,80 @@
+﻿name: Dwarf Archers
+characters:
+  - name: Dwarf Archer 1
+    race: !Dwarf {}
+    abilities: 
+      - !BurstHeal {}
+      - !Shield {}
+      - !HeavyCrossbow {}
+      - !Athletic {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 30 then
+        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Dwarf Archer 2
+    race: !Dwarf {}
+    abilities: 
+      - !BurstHeal {}
+      - !Shield {}
+      - !HeavyCrossbow {}
+      - !Athletic {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 30 then
+        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Dwarf Archer 3
+    race: !Dwarf {}
+    abilities: 
+      - !BurstHeal {}
+      - !Shield {}
+      - !HeavyCrossbow {}
+      - !Athletic {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 30 then
+        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Dwarf Archer 4
+    race: !Dwarf {}
+    abilities: 
+      - !BurstHeal {}
+      - !Shield {}
+      - !HeavyCrossbow {}
+      - !Athletic {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 30 then
+        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Dwarf Archer 5
+    race: !Dwarf {}
+    abilities: 
+      - !BurstHeal {}
+      - !Shield {}
+      - !HeavyCrossbow {}
+      - !Athletic {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 30 then
+        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Dwarf Archer 6
+    race: !Dwarf {}
+    abilities: 
+      - !BurstHeal {}
+      - !Shield {}
+      - !HeavyCrossbow {}
+      - !Athletic {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 30 then
+        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)

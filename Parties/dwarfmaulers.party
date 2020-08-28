@@ -1,0 +1,80 @@
+﻿name: Dwarf Maulers
+characters:
+  - name: Dwarf Mauler 1
+    race: !Dwarf {}
+    abilities: 
+      - !Maul {}
+      - !Shield {}
+      - !Athletic {}
+      - !Tough {}
+    script: |
+      if actor.EngagedWith and actor.EngagedWith.IsAlive then
+        action = "maul,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+        return
+      end
+      action = "maul,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Dwarf Mauler 2
+    race: !Dwarf {}
+    abilities: 
+      - !Maul {}
+      - !Shield {}
+      - !Athletic {}
+      - !Tough {}
+    script: |
+      if actor.EngagedWith and actor.EngagedWith.IsAlive then
+        action = "maul,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+        return
+      end
+      action = "maul,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Dwarf Mauler 3
+    race: !Dwarf {}
+    abilities: 
+      - !Maul {}
+      - !Shield {}
+      - !Athletic {}
+      - !Tough {}
+    script: |
+      if actor.EngagedWith and actor.EngagedWith.IsAlive then
+        action = "maul,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+        return
+      end
+      action = "maul,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Dwarf Mauler 4
+    race: !Dwarf {}
+    abilities: 
+      - !Maul {}
+      - !Shield {}
+      - !Athletic {}
+      - !Tough {}
+    script: |
+      if actor.EngagedWith and actor.EngagedWith.IsAlive then
+        action = "maul,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+        return
+      end
+      action = "maul,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Dwarf Mauler 5
+    race: !Dwarf {}
+    abilities: 
+      - !Maul {}
+      - !Shield {}
+      - !Athletic {}
+      - !Tough {}
+    script: |
+      if actor.EngagedWith and actor.EngagedWith.IsAlive then
+        action = "maul,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+        return
+      end
+      action = "maul,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Dwarf Mauler 6
+    race: !Dwarf {}
+    abilities: 
+      - !Maul {}
+      - !Shield {}
+      - !Athletic {}
+      - !Tough {}
+    script: |
+      if actor.EngagedWith and actor.EngagedWith.IsAlive then
+        action = "maul,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+        return
+      end
+      action = "maul,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)

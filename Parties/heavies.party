@@ -1,0 +1,80 @@
+﻿name: Heavy Archers
+characters:
+  - name: Archer 1
+    race: !Human {}
+    abilities: 
+      - !HeavyCrossbow {}
+      - !Shield {}
+      - !Athletic {}
+      - !Heal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Archer 2
+    race: !Human {}
+    abilities: 
+      - !HeavyCrossbow {}
+      - !Shield {}
+      - !Athletic {}
+      - !Heal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Archer 3
+    race: !Human {}
+    abilities: 
+      - !HeavyCrossbow {}
+      - !Shield {}
+      - !Athletic {}
+      - !Heal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Archer 4
+    race: !Human {}
+    abilities: 
+      - !HeavyCrossbow {}
+      - !Shield {}
+      - !Athletic {}
+      - !Heal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Archer 5
+    race: !Human {}
+    abilities: 
+      - !HeavyCrossbow {}
+      - !Shield {}
+      - !Athletic {}
+      - !Heal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Archer 6
+    race: !Human {}
+    abilities: 
+      - !HeavyCrossbow {}
+      - !Shield {}
+      - !Athletic {}
+      - !Heal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)

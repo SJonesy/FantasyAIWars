@@ -3,7 +3,7 @@ using Console = Colorful.Console;
 
 namespace FantasyAIWars.Abilities
 {
-    class Punch : MeleeAbility
+    class Sword : MeleeAbility
     {
         public override string Name { get; }
         public override int Delay { get; }
@@ -12,24 +12,24 @@ namespace FantasyAIWars.Abilities
         public override DamageType DamageType { get; }
         public override int EngagedDelay { get; }
 
-        public Punch()
+        public Sword()
         {
-            Name = "Punch";
-            Delay = 8;
-            EngagedDelay = 2;
-            Cooldown = 1;
+            Name = "Sword";
+            Delay = 6;
+            EngagedDelay = 3;
+            Cooldown = 3;
             Type = AbilityType.Melee;
             DamageType = DamageType.Physical;
         }
 
         public override void DoAbility(Action action)
         {
-            int damage = action.Actor.Random.Next(1, 5);
-            damage += action.Actor.Stats.Strength - 12;
+            int maxDamage = action.Actor.Stats.Strength + action.Actor.Stats.Dexterity + 10;
+            int damage = action.Actor.Random.Next(10, maxDamage);
             int modifiedDamage = ModifyDamage(damage, action.TargetCharacter);
             DoDamage(action.Actor, action.TargetCharacter, modifiedDamage, true);
 
-            string output = String.Format("{0} punches {1} right in the mouth for {2} damage.", action.Actor.Name, action.TargetCharacter.Name, modifiedDamage);
+            string output = String.Format("{0} slashes {1} with his sword for {2} damage.", action.Actor.Name, action.TargetCharacter.Name, modifiedDamage);
             Console.WriteLine(output);
         }
     }

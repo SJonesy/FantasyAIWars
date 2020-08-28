@@ -1,9 +1,12 @@
-﻿using System;
+﻿using FantasyAIWars.Abilities;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
+using Console = Colorful.Console;
 
 namespace FantasyAIWars
 {
@@ -98,9 +101,11 @@ namespace FantasyAIWars
         {
             const int TICK_LIMIT = 1000;
 
+            System.Random random = new System.Random();
+
             for (int i = 0; i < parties.Count; i++)
                 for (int j = 0; j < parties[i].Characters.Count; j++)
-                    parties[i].Characters[j].Init(i, j);
+                    parties[i].Characters[j].Init(i, j, random);
 
             List<Action>[] queuedActions = new List<Action>[TICK_LIMIT];
             for (int i = 0; i < TICK_LIMIT; i++)
@@ -126,11 +131,27 @@ namespace FantasyAIWars
                     if (!action.Actor.IsAlive)
                         continue;
 
-                    action.Ability.DoAbility(action);
-
-                    action.Actor.RecoveryTurnsRemaining = action.Ability.Cooldown;
                     action.Actor.IsUsingAbility = false;
                     action.Actor.AbilityInUse = null;
+                    action.Actor.IsCasting = false;
+                    action.Actor.RecoveryTurnsRemaining = action.Ability.Cooldown;
+
+                    if (action.Actor.Interrupted)
+                    {
+                        action.Actor.Interrupted = false;
+                        continue;
+                    }
+
+                    if (action.TargetCharacter != null && !action.TargetCharacter.IsAlive)
+                    {
+                        Debug.WriteLine(action);
+                        Console.WriteLine("{0}'s action ({1}) was canceled because his target {2} is already dead.",
+                            action.Actor.Name, action.Ability.Name, action.TargetCharacter.Name, Color.DarkGray);
+                        continue;
+                    }
+
+                    action.Ability.DoAbility(action);
+                    action.Ability.DoPostAbility(action);
                 }
 
                 // Queue new actions
@@ -151,7 +172,12 @@ namespace FantasyAIWars
                         Action action = se.DecideAction(actor);
                         if (action != null)
                         {
-                            int nextAction = tick + (int)Math.Round(action.GetDelay() * (10.0 / action.Actor.Stats.Dexterity));
+                            if (action.Ability.ManaCost > action.Actor.Mana)
+                                continue;
+                            int delay = (int)Math.Round(action.GetDelay() * (10.0 / action.Actor.Stats.Dexterity));
+                            if (action.Actor.EngagedWith != null && action.Ability.GetType().IsSubclassOf(typeof(SpellAbility)))
+                                delay += 5;
+                            int nextAction = tick + delay;
                             if (nextAction <= tick)
                                 nextAction = tick + 1;
                             if (nextAction >= TICK_LIMIT)
@@ -200,6 +226,7 @@ namespace FantasyAIWars
                 {
                     DisplayStatus(parties);
                     Console.WriteLine("{0} has won!", aliveParties[0].Name);
+                    Debug.WriteLine("Round ended on tick {0}", tick);
                     return;
                 }
 

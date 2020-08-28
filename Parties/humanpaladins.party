@@ -1,0 +1,80 @@
+﻿name: Human Paladins
+characters:
+  - name: Human Paladin 1
+    race: !Human {}
+    abilities: 
+      - !Sword {}
+      - !Shield {}
+      - !Athletic {}
+      - !BurstHeal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 30 then
+        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      action = "Sword,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Human Paladin 2
+    race: !Human {}
+    abilities: 
+      - !Sword {}
+      - !Shield {}
+      - !Athletic {}
+      - !BurstHeal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 30 then
+        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      action = "Sword,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Human Paladin 3
+    race: !Human {}
+    abilities: 
+      - !Sword {}
+      - !Shield {}
+      - !Athletic {}
+      - !BurstHeal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 30 then
+        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      action = "Sword,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Human Paladin 4
+    race: !Human {}
+    abilities: 
+      - !Sword {}
+      - !Shield {}
+      - !Athletic {}
+      - !BurstHeal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 30 then
+        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      action = "Sword,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Human Paladin 5
+    race: !Human {}
+    abilities: 
+      - !Sword {}
+      - !Shield {}
+      - !Athletic {}
+      - !BurstHeal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 30 then
+        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      action = "Sword,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+  - name: Human Paladin 6
+    race: !Human {}
+    abilities: 
+      - !Sword {}
+      - !Shield {}
+      - !Athletic {}
+      - !BurstHeal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 30 then
+        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      action = "Sword,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
