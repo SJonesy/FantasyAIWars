@@ -1,61 +1,44 @@
-﻿name: Early Balance
+﻿name: Rangers
 characters:
-  - name: Skeleton Tank
-    race: !Skeleton {}
+  - name: Ranger
+    race: !Human {}
     abilities: 
-      - !Sword {}
+      - !HeavyCrossbow {}
+      - !Shield {}
       - !Tough {}
-      - !Shield {}
-      - !Athletic {}
+      - !GustOfWind {}
     script: |
-      if actor.EngagedWith and actor.EngagedWith.IsAlive then
-        action = "Sword,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+      if lowestHealthEnemy.HitPoints < 60 then
+        action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
         return
       end
-      if lowestHealthEnemy then
-        action = "Sword,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
-        return
-      end
-  - name: Heal Brawler 1
+      action = "gustofwind,enemyparty"
+  - name: Ranger
     race: !Human {}
     abilities: 
-      - !Sword {}
+      - !HeavyCrossbow {}
       - !Shield {}
-      - !Athletic {}
-      - !BurstHeal {}
+      - !Tough {}
+      - !GustOfWind {}
     script: |
-      if actor.HitPoints < actor.MaxHitPoints - 30 then
-        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+      if lowestHealthEnemy.HitPoints < 60 then
+        action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
         return
       end
-      if actor.EngagedWith and actor.EngagedWith.IsAlive then
-        action = "Sword,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
-        return
-      end
-      if lowestHealthEnemy then
-        action = "Sword,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
-        return
-      end
-  - name: Heal Brawler 2
+      action = "gustofwind,enemyparty"
+  - name: Ranger
     race: !Human {}
     abilities: 
-      - !Sword {}
+      - !HeavyCrossbow {}
       - !Shield {}
-      - !Athletic {}
-      - !BurstHeal {}
+      - !Tough {}
+      - !GustOfWind {}
     script: |
-      if actor.HitPoints < actor.MaxHitPoints - 30 then
-        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+      if lowestHealthEnemy.HitPoints < 60 then
+        action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
         return
       end
-      if actor.EngagedWith and actor.EngagedWith.IsAlive then
-        action = "Sword,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
-        return
-      end
-      if lowestHealthEnemy then
-        action = "Sword,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
-        return
-      end
+      action = "gustofwind,enemyparty"
   - name: Ranger
     race: !Human {}
     abilities: 
@@ -90,7 +73,7 @@ characters:
       - !Heal {}
       - !HeavyCrossbow {}
     script: |
-      if lowestHealthEnemy.HitPoints < 60 then
+      if lowestHealthEnemy.HitPoints < 20 then
         action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
         return
       end

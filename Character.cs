@@ -30,6 +30,11 @@ namespace FantasyAIWars
         // Resists
         public ResistBlock Resists;
 
+        // Immunities
+        public bool ImmuneToFear = false;
+        public bool ImmuneToParalzye = false;
+        public bool ImmuneToSleep = false;
+
         // Combat Variables
         public bool IsCasting = false;
         public bool IsUsingAbility = false;
@@ -72,12 +77,60 @@ namespace FantasyAIWars
             }
         }
 
+        public void DoDamage(Action action, int damage, bool disableOutput = false)
+        {
+            damage = ApplyResists(damage, action.Ability.DamageType);
+            HitPoints -= (int)damage;
+
+            if (!disableOutput)
+                action.Ability.DoOutput(action, damage, this);
+        }
+
+        public void DoHealing(Action action, int healing, bool disableOutput = false)
+        {
+            HitPoints = Math.Min(MaxHitPoints, HitPoints + healing);
+
+            if (!disableOutput)
+                action.Ability.DoOutput(action, healing, this);
+        }
+
+        private int ApplyResists(float damage, DamageType damageType)
+        {
+                 if (damageType == DamageType.Ice) damage /= Resists.Ice;
+            else if (damageType == DamageType.Fire) damage /= Resists.Fire;
+            else if (damageType == DamageType.Poison) damage /= Resists.Poison;
+            else if (damageType == DamageType.Holy) damage /= Resists.Holy;
+            else if (damageType == DamageType.Unholy) damage /= Resists.Unholy;
+            else if (damageType == DamageType.Water) damage /= Resists.Water;
+            else if (damageType == DamageType.Air) damage /= Resists.Air;
+            else if (damageType == DamageType.Earth) damage /= Resists.Earth;
+            else if (damageType == DamageType.Physical) damage /= Resists.Physical;
+
+            return Math.Max((int)damage, 0);
+        }
+
         public void DumpCharacterInfo()
         {
-            Color outputColor = this.IsAlive ? Color.Gray : Color.DarkRed;
+            Color outputColor = Color.Gray;
+            if (!IsAlive)
+            {
+                outputColor = Color.DarkRed;
+            }
+            else if (HitPoints < MaxHitPoints)
+            {
+                if (HitPoints < MaxHitPoints / 2)
+                    outputColor = Color.Gray;
+                if (HitPoints < MaxHitPoints / 4)
+                    outputColor = Color.IndianRed;
+            }
+            else
+            {
+                outputColor = Color.LightGray;
+            }
 
-            Console.WriteLine("{0} ({1}/{2}hp {3}/{4}mp)\tBuild: {5} [{6}]",
-                Name, HitPoints, MaxHitPoints, Mana, MaxMana, Race.ToString(), string.Join(", ", Abilities), outputColor);
+            string output = String.Format("{0} ({1}/{2}hp {3}/{4}mp)\tBuild: {5} [{6}]",
+                Name, HitPoints, MaxHitPoints, Mana, MaxMana, Race.ToString(), string.Join(", ", Abilities));
+            Console.WriteLine(output, outputColor);
         }
     }
 }

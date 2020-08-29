@@ -2,7 +2,7 @@
   "profiles": {
     "FantasyAIWars": {
       "commandName": "Project",
-      "commandLineArgs": "Parties/earlybalanced.party Parties/humanpaladins.party"
+      "commandLineArgs": "Parties/dnd.party Parties/dwarfmaulers.party"
     }
   }
 }

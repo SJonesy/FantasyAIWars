@@ -1,5 +1,6 @@
 ﻿using FantasyAIWars.Races;
 using System;
+using System.Drawing;
 using Console = Colorful.Console;
 
 namespace FantasyAIWars.Abilities
@@ -12,6 +13,8 @@ namespace FantasyAIWars.Abilities
         public override AbilityType Type { get; }
         public override DamageType DamageType { get; }
         public override int EngagedDelay { get; }
+        public override string OutputText { get; }
+        public override Color OutputColor { get; }
 
         public Maul()
         {
@@ -21,19 +24,16 @@ namespace FantasyAIWars.Abilities
             Cooldown = 5;
             Type = AbilityType.Melee;
             DamageType = DamageType.Physical;
+            OutputText = "{actor} SLAMS {target} with a huge maul for {damage} damage.";
+            OutputColor = Color.LightGray;
         }
 
         public override void DoAbility(Action action)
         {
-            int damage = action.Actor.Random.Next(10, action.Actor.Stats.Strength * 4);
-
+            int damage = action.Actor.Random.Next(10, action.Actor.Stats.Strength * 3);
             if (action.TargetCharacter.Race.GetType() == typeof(Skeleton))
-                damage *= 5;
-            int modifiedDamage = ModifyDamage(damage, action.TargetCharacter);
-            DoDamage(action.Actor, action.TargetCharacter, modifiedDamage, true);
-
-            string output = String.Format("{0} SLAMS {1} with a huge maul for {2} damage.", action.Actor.Name, action.TargetCharacter.Name, modifiedDamage);
-            Console.WriteLine(output);
+                damage *= 4;
+            action.TargetCharacter.DoDamage(action, damage);
         }
     }
 }

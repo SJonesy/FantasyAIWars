@@ -12,6 +12,8 @@ namespace FantasyAIWars.Abilities
         public override int Delay { get; }
         public override int Cooldown { get; }
         public override AbilityType Type { get; }
+        public override string OutputText { get; }
+        public override Color OutputColor { get; }
 
         public Heal()
         {
@@ -20,16 +22,15 @@ namespace FantasyAIWars.Abilities
             Cooldown = 3;
             ManaCost = 3;
             Type = AbilityType.Heal;
+            OutputText = "{target}'s body is covered in a healing light as {actor} finishes casting heal for {healing}hp.";
+            OutputColor = Color.Yellow;
         }
 
         public override void DoAbility(Action action)
         {
             // (15 to 25) + (1 to Wisdom)
             int healing = action.Actor.Random.Next(15, 25) + (int)(action.Actor.Stats.Wisdom * action.Actor.Random.NextDouble());
-            string output = String.Format("{0}'s body is covered in a healing light as {1} finishes casting Heal for {2} hp.", 
-                action.TargetCharacter.Name, action.Actor.Name, healing);
-            DoHealing(action.Actor, action.TargetCharacter, healing);
-            Console.WriteLine(output, Color.LightGoldenrodYellow);
+            action.TargetCharacter.DoHealing(action, healing);
         }
     }
 }

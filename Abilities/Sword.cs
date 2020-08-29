@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Console = Colorful.Console;
 
 namespace FantasyAIWars.Abilities
@@ -11,6 +12,8 @@ namespace FantasyAIWars.Abilities
         public override AbilityType Type { get; }
         public override DamageType DamageType { get; }
         public override int EngagedDelay { get; }
+        public override string OutputText { get; }
+        public override Color OutputColor { get; }
 
         public Sword()
         {
@@ -20,17 +23,16 @@ namespace FantasyAIWars.Abilities
             Cooldown = 3;
             Type = AbilityType.Melee;
             DamageType = DamageType.Physical;
+            OutputText = "{actor} slashes {target} with his sword for {damage}hp.";
+            OutputColor = Color.LightGray;
         }
 
         public override void DoAbility(Action action)
         {
-            int maxDamage = action.Actor.Stats.Strength + action.Actor.Stats.Dexterity + 10;
+            int maxDamage = action.Actor.Stats.Strength + action.Actor.Stats.Dexterity + 5;
             int damage = action.Actor.Random.Next(10, maxDamage);
-            int modifiedDamage = ModifyDamage(damage, action.TargetCharacter);
-            DoDamage(action.Actor, action.TargetCharacter, modifiedDamage, true);
 
-            string output = String.Format("{0} slashes {1} with his sword for {2} damage.", action.Actor.Name, action.TargetCharacter.Name, modifiedDamage);
-            Console.WriteLine(output);
+            action.TargetCharacter.DoDamage(action, damage);
         }
     }
 }

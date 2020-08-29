@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using Console = Colorful.Console;
 
@@ -14,71 +16,68 @@ namespace FantasyAIWars
         public abstract int Cooldown { get; }
         public abstract AbilityType Type { get; }
         public virtual DamageType DamageType { get; }
+        public virtual string OutputText { get; }
+        public virtual Color OutputColor { get; }
+
         public int ManaCost = 0;
 
         public abstract void DoAbility(Action action);
 
-        public virtual void DoHealing(Character actor, Character target, int healing, bool alreadyModified = false)
+        public virtual void DoOutput(Action action, int healthChange, Character target)
         {
-            target.HitPoints = Math.Min(target.MaxHitPoints, target.HitPoints + healing);
-        }
+            string output = this.OutputText;
+            healthChange = Math.Abs(healthChange);
+            output = output.Replace("{damage}", healthChange.ToString());
+            output = output.Replace("{healing}", healthChange.ToString());
+            output = output.Replace("{heal}", healthChange.ToString());
+            output = output.Replace("{health}", healthChange.ToString());
+            output = output.Replace("{actor}", action.Actor.Name);
+            output = output.Replace("{target}", target.Name);
 
-        public virtual void DoDamage(Character actor, Character target, int damage, bool alreadyModified = false)
-        {
-            if (!alreadyModified)
-                damage = ModifyDamage(damage, target);
-
-            target.HitPoints -= (int)damage;
+            Color outputColor = OutputColor != null ? OutputColor : Color.Gray;
+            Console.WriteLine(output, outputColor);
         }
 
         public virtual void DoPostAbility(Action action)
         {
             Character actor = action.Actor;
-            Character target = action.TargetCharacter;
 
-            // TODO: should these post-damage checks be done somewhere else?
-            if (target.HitPoints <= 0)
+            List<Character> targets = new List<Character>();
+            if (action.TargetCharacter != null)
+                targets.Add(action.TargetCharacter);
+            if (action.TargetParty != null)
+                targets.AddRange(action.TargetParty.Characters);
+
+            foreach (var target in targets)
             {
-                target.IsAlive = false;
-                target.IsCasting = false;
-                target.IsUsingAbility = false;
-                target.AbilityInUse = null;
-                Console.WriteLine("*** {0} has died ***", target.Name, Color.Red);
-                return;
-            }
-            if (this.Type == AbilityType.Melee && target.IsAlive)
-            {
-                actor.EngagedWith = target;
-                target.EngagedWith = actor;
-            }
-            if (target.IsCasting)
-            {
-                /* At 75 health = 25% chance
-                 * At 50 health = 50% chance
-                 * At 25 health = 75% chance
-                 * At 100+ health = 0% chance */
-                float interruptRollChance = Math.Max(0, 100 - (target.HitPoints / 100));
-                if (target.Random.NextDouble() < interruptRollChance && target.Random.Next(1, 20) > target.Stats.Wisdom)
+                if (target.HitPoints <= 0)
                 {
-                    Console.WriteLine("{0}'s casting of {1} was interrupted by {2}!", target.Name, target.AbilityInUse.Name, actor.Name);
-                    target.Interrupted = true;
+                    target.IsAlive = false;
+                    target.IsCasting = false;
+                    target.IsUsingAbility = false;
+                    target.AbilityInUse = null;
+                    Console.WriteLine("*** {0} has died ***", target.Name, Color.Red);
+                    return;
+                }
+                if (this.Type == AbilityType.Melee && target.IsAlive)
+                {
+                    actor.EngagedWith = target;
+                    target.EngagedWith = actor;
+                }
+                if (target.IsCasting)
+                {
+                    /* At 75 health = 25% chance
+                     * At 50 health = 50% chance
+                     * At 25 health = 75% chance
+                     * At 100+ health = 0% chance */
+                    float interruptRollChance = Math.Max(0, (100 - target.HitPoints) / 100);
+                    if (target.Random.NextDouble() < interruptRollChance && target.Random.Next(1, 20) > target.Stats.Wisdom)
+                    {
+                        Console.WriteLine("{0}'s casting of {1} was interrupted by {2}!", target.Name, target.AbilityInUse.Name, actor.Name);
+                        target.Interrupted = true;
+                    }
                 }
             }
-        }
-
-        public virtual int ModifyDamage(float damage, Character target)
-        {
-            if (this.DamageType == DamageType.Ice) damage /= target.Resists.Ice;
-            else if (this.DamageType == DamageType.Fire) damage /= target.Resists.Fire;
-            else if (this.DamageType == DamageType.Poison) damage /= target.Resists.Poison;
-            else if (this.DamageType == DamageType.Holy) damage /= target.Resists.Holy;
-            else if (this.DamageType == DamageType.Unholy) damage /= target.Resists.Unholy;
-            else if (this.DamageType == DamageType.Water) damage /= target.Resists.Water;
-            else if (this.DamageType == DamageType.Air) damage /= target.Resists.Air;
-            else if (this.DamageType == DamageType.Earth) damage /= target.Resists.Earth;
-            else if (this.DamageType == DamageType.Physical) damage /= target.Resists.Physical;
-
-            return Math.Max((int)damage, 0);
         }
 
         public virtual int GetDelay(Action action)

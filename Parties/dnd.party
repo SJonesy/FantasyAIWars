@@ -1,36 +1,99 @@
 ﻿name: DnD Party
 characters:
-  - name: Generic Character 1
+  - name: Human Paladin
     race: !Human {}
     abilities: 
-      - !Punch {}
+      - !Sword {}
       - !Shield {}
+      - !Athletic {}
+      - !BurstHeal {}
+    script: |
+      if actor.HitPoints < actor.MaxHitPoints - 30 then
+        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+        return
+      end
+      if actor.EngagedWith and actor.EngagedWith.IsAlive then
+        action = "Sword,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+        return
+      end
+      if lowestHealthEnemy then
+        action = "Sword,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+        return
+      end
+  - name: Dwarven Fighter
+    race: !Dwarf {}
+    abilities: 
+      - !Maul {}
+      - !Shield {}
+      - !Athletic {}
+      - !Tough {}
+    script: |
+      if actor.EngagedWith and actor.EngagedWith.IsAlive then
+        action = "maul,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
+        return
+      end
+      if lowestHealthEnemy then
+        action = "maul,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+        return
+      end
+  - name: Human Fighter
+    race: !Human {}
+    abilities: 
+      - !HeavyCrossbow {}
+      - !Shield {}
+      - !Sword {}
       - !Athletic {}
     script: |
       if actor.EngagedWith and actor.EngagedWith.IsAlive then
-        action = "punch,enemy " .. tostring(actor.CharacterIndex)
+        action = "sword,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
         return
       end
-      for i=0,enemyPartyCount-1 do 
-        if enemyParty[i].IsAlive then 
-          action = "punch,enemy " .. tostring(i)
-          return
-        end
-      end
-  - name: Generic Character 2
+      if lowestHealthEnemy then
+        action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+        return
+      end      
+  - name: Human Ranger
     race: !Human {}
     abilities: 
-      - !Punch {}
+      - !HeavyCrossbow {}
       - !Shield {}
-      - !Athletic {}
+      - !Tough {}
+      - !GustOfWind {}
     script: |
-      if actor.EngagedWith and actor.EngagedWith.IsAlive then
-        action = "punch,enemy " .. tostring(actor.CharacterIndex)
+      if lowestHealthEnemy.HitPoints < 50 then
+        action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
         return
       end
-      for i=0,enemyPartyCount-1 do 
-        if enemyParty[i].IsAlive then 
-          action = "punch,enemy " .. tostring(i)
-          return
-        end
+      action = "gustofwind,enemyparty"
+  - name: Dwarven Cleric
+    race: !Dwarf {}
+    abilities: 
+      - !BurstHeal {}
+      - !Shield {}
+      - !Heal {}
+      - !Tough {}
+    script: |
+      if lowestHealthFriendly.HitPoints < lowestHealthFriendly.MaxHitPoints - 50 then
+        action = "burstheal,friend " .. tostring(lowestHealthFriendly.CharacterIndex)
+        return
+      end
+      if lowestHealthFriendly.HitPoints < lowestHealthFriendly.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(lowestHealthFriendly.CharacterIndex)
+        return
+      end
+  - name: Dwarven Cleric
+    race: !Dwarf {}
+    abilities: 
+      - !BurstHeal {}
+      - !Shield {}
+      - !Heal {}
+      - !Tough {}
+    script: |
+      if lowestHealthFriendly.HitPoints < lowestHealthFriendly.MaxHitPoints - 50 then
+        action = "burstheal,friend " .. tostring(lowestHealthFriendly.CharacterIndex)
+        return
+      end
+      if lowestHealthFriendly.HitPoints < lowestHealthFriendly.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(lowestHealthFriendly.CharacterIndex)
+        return
       end

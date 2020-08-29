@@ -23,9 +23,10 @@
             Resists.Physical = 5.0f;
             Resists.Unholy = 2.0f;
             Resists.Holy = 0.25f;
+            Resists.Air = 1.5f;
         }
 
-        public virtual void Apply(Character character)
+        public override void Apply(Character character)
         {
             character.Stats = this.Stats;
             character.Resists = this.Resists;

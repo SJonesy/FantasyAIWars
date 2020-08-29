@@ -175,13 +175,18 @@ namespace FantasyAIWars
                             if (action.Ability.ManaCost > action.Actor.Mana)
                                 continue;
                             int delay = (int)Math.Round(action.GetDelay() * (10.0 / action.Actor.Stats.Dexterity));
+                            // TODO: do I want this?
                             if (action.Actor.EngagedWith != null && action.Ability.GetType().IsSubclassOf(typeof(SpellAbility)))
-                                delay += 5;
+                                delay += 2;
+                            // Random delay chance to make synchronizing damage slightly less reliable
+                            if (random.Next(1, action.Actor.Stats.Dexterity) < 4)
+                                delay += 1;
                             int nextAction = tick + delay;
                             if (nextAction <= tick)
                                 nextAction = tick + 1;
                             if (nextAction >= TICK_LIMIT)
                                 continue;
+
                             action.Ability.OnQueue(action);
                             queuedActions[nextAction].Add(action);
                             action.Actor.IsUsingAbility = true;
@@ -240,16 +245,16 @@ namespace FantasyAIWars
         private static void DisplayStatus(List<Party> parties)
         {
             Console.WriteLine();
-            Console.WriteLine("============================================================================");
+            Console.WriteLine("====================================================================================", Color.DarkGray);
             foreach (var party in parties)
             {
-                Console.WriteLine("Party: {0}", party.Name);
+                Console.WriteLine("Party: {0}", party.Name, Color.LightCyan);
                 foreach (var character in party.Characters)
                 {
                     character.DumpCharacterInfo();
                 }
             }
-            Console.WriteLine("============================================================================");
+            Console.WriteLine("====================================================================================", Color.DarkGray);
             Console.WriteLine();
         }
 

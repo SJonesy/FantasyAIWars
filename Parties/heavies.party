@@ -12,7 +12,10 @@ characters:
         action = "heal,friend " .. tostring(actor.CharacterIndex)
         return
       end
-      action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+      if lowestHealthEnemy then
+        action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+        return
+      end
   - name: Archer 2
     race: !Human {}
     abilities: 
@@ -25,7 +28,10 @@ characters:
         action = "heal,friend " .. tostring(actor.CharacterIndex)
         return
       end
-      action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+      if lowestHealthEnemy then
+        action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+        return
+      end
   - name: Archer 3
     race: !Human {}
     abilities: 
@@ -38,7 +44,10 @@ characters:
         action = "heal,friend " .. tostring(actor.CharacterIndex)
         return
       end
-      action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+      if lowestHealthEnemy then
+        action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+        return
+      end
   - name: Archer 4
     race: !Human {}
     abilities: 
@@ -51,7 +60,10 @@ characters:
         action = "heal,friend " .. tostring(actor.CharacterIndex)
         return
       end
-      action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+      if lowestHealthEnemy then
+        action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+        return
+      end
   - name: Archer 5
     race: !Human {}
     abilities: 
@@ -64,7 +76,10 @@ characters:
         action = "heal,friend " .. tostring(actor.CharacterIndex)
         return
       end
-      action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+      if lowestHealthEnemy then
+        action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+        return
+      end
   - name: Archer 6
     race: !Human {}
     abilities: 
@@ -77,4 +92,7 @@ characters:
         action = "heal,friend " .. tostring(actor.CharacterIndex)
         return
       end
-      action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+      if lowestHealthEnemy then
+        action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+        return
+      end

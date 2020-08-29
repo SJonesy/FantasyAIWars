@@ -13,6 +13,8 @@ namespace FantasyAIWars.Abilities
         public override int Cooldown { get; }
         public override AbilityType Type { get; }
         public override DamageType DamageType { get; }
+        public override string OutputText { get; }
+        public override Color OutputColor { get; }
 
         public HeavyCrossbow()
         {
@@ -21,16 +23,14 @@ namespace FantasyAIWars.Abilities
             Cooldown = 10;
             Type = AbilityType.Attack;
             DamageType = DamageType.Physical;
+            OutputText = "{actor} shoots his heavy crossbow at {target} for {damage}hp and begins to slowly reload.";
+            OutputColor = Color.PaleVioletRed;
         }
 
         public override void DoAbility(Action action)
         {
             int damage = action.Actor.Random.Next(25, 50);
-            int modifiedDamage = ModifyDamage(damage, action.TargetCharacter);
-            DoDamage(action.Actor, action.TargetCharacter, modifiedDamage, true);
-
-            string output = String.Format("{0} shoots his heavy crossbow at {1} for {2}hp and begins to slowly reload.", action.Actor.Name, action.TargetCharacter.Name, modifiedDamage);
-            Console.WriteLine(output, Color.PaleVioletRed);
+            action.TargetCharacter.DoDamage(action, damage);
         }
     }
 }

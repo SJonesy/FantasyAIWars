@@ -6,6 +6,7 @@
         Passive,
         Attack,
         Melee,
+        AoE,
         Heal
     }
 
