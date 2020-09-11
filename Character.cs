@@ -17,6 +17,8 @@ namespace FantasyAIWars
         public int CharacterIndex { get; set; }
         public int PartyIndex { get; set; }
         public Random Random { get; set; }
+        public bool IsHealer = false;
+        public int ActionCount = 0;
 
         // Status
         public int MaxHitPoints = 70;
@@ -67,6 +69,16 @@ namespace FantasyAIWars
             Mana = MaxMana;
             Buffs = new HashSet<StatusEffect>();
             Debuffs = new HashSet<StatusEffect>();
+
+            foreach (var ability in Abilities)
+            {
+                if (ability.Type == AbilityType.Heal)
+                {
+                    IsHealer = true;
+                    break;
+                }
+            }
+
             return true;
         }
 
@@ -120,6 +132,7 @@ namespace FantasyAIWars
             else if (damageType == DamageType.Air) damage /= Resists.Air;
             else if (damageType == DamageType.Earth) damage /= Resists.Earth;
             else if (damageType == DamageType.Physical) damage /= Resists.Physical;
+            else if (damageType == DamageType.Arcane) damage /= Resists.Arcane;
 
             return Math.Max((int)damage, 0);
         }

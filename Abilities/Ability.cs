@@ -50,6 +50,8 @@ namespace FantasyAIWars
 
             foreach (var target in targets)
             {
+                if (!target.IsAlive)
+                    continue;
                 if (target.HitPoints <= 0)
                 {
                     target.IsAlive = false;
@@ -59,7 +61,7 @@ namespace FantasyAIWars
                     Console.WriteLine("*** {0} has died ***", target.Name, Color.Red);
                     return;
                 }
-                if (this.Type == AbilityType.Melee && target.IsAlive)
+                if (this.Type == AbilityType.Melee)
                 {
                     actor.EngagedWith = target;
                     target.EngagedWith = actor;

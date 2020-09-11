@@ -6,10 +6,10 @@ characters:
       - !Sword {}
       - !Shield {}
       - !Athletic {}
-      - !BurstHeal {}
+      - !Heal {}
     script: |
-      if actor.HitPoints < actor.MaxHitPoints - 30 then
-        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+      if actor.HitPoints < actor.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(actor.CharacterIndex)
         return
       end
       if lowestHealthEnemy then
@@ -22,10 +22,10 @@ characters:
       - !Sword {}
       - !Shield {}
       - !Athletic {}
-      - !BurstHeal {}
+      - !Heal {}
     script: |
-      if actor.HitPoints < actor.MaxHitPoints - 30 then
-        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+      if actor.HitPoints < actor.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(actor.CharacterIndex)
         return
       end
       if lowestHealthEnemy then
@@ -38,14 +38,40 @@ characters:
       - !Sword {}
       - !Shield {}
       - !Athletic {}
-      - !BurstHeal {}
+      - !Heal {}
     script: |
-      if actor.HitPoints < actor.MaxHitPoints - 30 then
-        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+      if actor.HitPoints < actor.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(actor.CharacterIndex)
         return
       end
       if lowestHealthEnemy then
         action = "Sword,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+        return
+      end
+  - name: Dwarf Utility Bot
+    race: !Dwarf {}
+    abilities: 
+      - !HeavyCrossbow {}
+      - !MassStoneSkin {}
+      - !Dispel {}
+      - !Heal {}
+    script: |
+      if actor.ActionCount == 0 then
+        action = "MassStoneSkin,friendlyparty"
+        return
+      end
+      for i=0,enemyPartyCount-1 do 
+        if enemyParty[i].Buffs.Count > 0 then 
+          action = "dispel,enemy " .. tostring(i)
+          return
+        end
+      end
+      if lowestHealthFriendly.HitPoints < lowestHealthFriendly.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(lowestHealthFriendly.CharacterIndex)
+        return
+      end
+      if lowestHealthEnemy then
+        action = "heavycrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
         return
       end
   - name: Human Paladin 4
@@ -54,10 +80,10 @@ characters:
       - !Sword {}
       - !Shield {}
       - !Athletic {}
-      - !BurstHeal {}
+      - !Heal {}
     script: |
-      if actor.HitPoints < actor.MaxHitPoints - 30 then
-        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+      if actor.HitPoints < actor.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(actor.CharacterIndex)
         return
       end
       if lowestHealthEnemy then
@@ -70,26 +96,10 @@ characters:
       - !Sword {}
       - !Shield {}
       - !Athletic {}
-      - !BurstHeal {}
+      - !Heal {}
     script: |
-      if actor.HitPoints < actor.MaxHitPoints - 30 then
-        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
-        return
-      end
-      if lowestHealthEnemy then
-        action = "Sword,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
-        return
-      end
-  - name: Human Paladin 6
-    race: !Human {}
-    abilities: 
-      - !Sword {}
-      - !Shield {}
-      - !Athletic {}
-      - !BurstHeal {}
-    script: |
-      if actor.HitPoints < actor.MaxHitPoints - 30 then
-        action = "burstheal,friend " .. tostring(actor.CharacterIndex)
+      if actor.HitPoints < actor.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(actor.CharacterIndex)
         return
       end
       if lowestHealthEnemy then

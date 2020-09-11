@@ -18,9 +18,9 @@ namespace FantasyAIWars.Abilities
         public Dispel()
         {
             Name = "Dispel";
-            Delay = 2;
-            Cooldown = 4;
-            ManaCost = 9;
+            Delay = 5;
+            Cooldown = 5;
+            ManaCost = 15;
             Type = AbilityType.Spell;
             DamageType = DamageType.None;
             OutputText = "As {actor} finishes casting, {target} feels a bit dispelled.";

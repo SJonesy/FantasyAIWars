@@ -11,5 +11,6 @@
         public float Air = 1.0f;
         public float Earth = 1.0f;
         public float Physical = 1.0f;
+        public float Arcane = 1.0f;
     }
 }

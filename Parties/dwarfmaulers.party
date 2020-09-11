@@ -103,7 +103,7 @@ characters:
   - name: Dwarf Dispeller
     race: !Dwarf {}
     abilities: 
-      - !Maul {}
+      - !HeavyCrossbow {}
       - !Shield {}
       - !Dispel {}
       - !Tough {}
@@ -114,11 +114,7 @@ characters:
           return
         end
       end
-      if actor.EngagedWith and actor.EngagedWith.IsAlive then
-        action = "maul,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
-        return
-      end
       if lowestHealthEnemy then
-        action = "maul,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
+        action = "heavycrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
         return
       end

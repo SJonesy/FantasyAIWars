@@ -141,6 +141,7 @@ namespace FantasyAIWars
                     action.Actor.AbilityInUse = null;
                     action.Actor.IsCasting = false;
                     action.Actor.RecoveryTurnsRemaining = action.Ability.Cooldown;
+                    action.Actor.ActionCount += 1;
 
                     if (action.Actor.Interrupted)
                     {
@@ -179,7 +180,10 @@ namespace FantasyAIWars
                         if (action != null)
                         {
                             if (action.Ability.ManaCost > action.Actor.Mana)
+                            {
+                                Console.WriteLine("{0} tries to cast {1}, but they don't have enough mana!", action.Actor.Name, action.Ability.Name, Color.DarkGray);
                                 continue;
+                            }
                             int delay = (int)Math.Round(action.GetDelay() * (10.0 / action.Actor.Stats.Dexterity));
                             // TODO: do I want this?
                             if (action.Actor.EngagedWith != null && action.Ability.GetType().IsSubclassOf(typeof(SpellAbility)))

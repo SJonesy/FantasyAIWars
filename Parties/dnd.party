@@ -54,7 +54,7 @@ characters:
       - !Tough {}
       - !MassStoneSkin {}
     script: |
-      if tick == 1 then
+      if actor.ActionCount == 0 then
         action = "MassStoneSkin,friendlyparty"
         return
       end

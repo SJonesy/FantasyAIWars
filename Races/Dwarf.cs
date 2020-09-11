@@ -23,6 +23,7 @@
             Resists.Poison = 1.1f;
             Resists.Earth = 1.3f;
             Resists.Physical = 1.2f;
+            Resists.Arcane = 1.1f;
         }
     }
 }

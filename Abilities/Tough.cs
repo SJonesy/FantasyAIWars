@@ -27,6 +27,7 @@
             action.Actor.Resists.Air += .1f;
             action.Actor.Resists.Earth += .1f;
             action.Actor.Resists.Physical += .1f;
+            action.Actor.Resists.Arcane += .1f;
         }
     }
 }
