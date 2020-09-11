@@ -7,7 +7,10 @@
         Attack,
         Melee,
         AoE,
-        Heal
+        Heal,
+        GroupBuff,
+        AttackSpell,
+        Spell
     }
 
     public enum DamageType
@@ -21,6 +24,14 @@
         Water,
         Air,
         Earth,
-        Physical
+        Physical,
+        Arcane
+    }
+
+    public enum StatusEffect
+    {
+        // Buffs
+        StoneSkin
+        // Debuffs
     }
 }

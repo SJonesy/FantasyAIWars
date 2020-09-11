@@ -80,6 +80,12 @@ namespace FantasyAIWars
 
                 foreach (var character in party.Characters)
                 {
+                    if (character.Name.Length > 19)
+                    {
+                        Console.WriteLine("The character name {0} is too long. The maximum character name length is 19 characters.", character.Name);
+                        return false;
+                    }
+
                     if (character.Abilities.Count > MAX_ABILITIES)
                     {
                         Console.WriteLine("Each character may only have {0} abilities. {1} has {2} abilites.", MAX_ABILITIES, character.Name, character.Abilities.Count);
@@ -245,7 +251,7 @@ namespace FantasyAIWars
         private static void DisplayStatus(List<Party> parties)
         {
             Console.WriteLine();
-            Console.WriteLine("====================================================================================", Color.DarkGray);
+            Console.WriteLine("==================================================================================================", Color.DarkGray);
             foreach (var party in parties)
             {
                 Console.WriteLine("Party: {0}", party.Name, Color.LightCyan);
@@ -254,7 +260,7 @@ namespace FantasyAIWars
                     character.DumpCharacterInfo();
                 }
             }
-            Console.WriteLine("====================================================================================", Color.DarkGray);
+            Console.WriteLine("==================================================================================================", Color.DarkGray);
             Console.WriteLine();
         }
 

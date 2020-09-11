@@ -42,6 +42,7 @@ namespace FantasyAIWars
             env.friendlyParty = new LuaTable();
             env.friendlyPartyCount = friendlyParty.Characters.Count;
             env.actor = actor;
+            env.tick = tick;
             for (int i = 0; i < enemyParty.Characters.Count; i++)
                 env.enemyParty[i] = enemyParty.Characters[i];
             for (int i = 0; i < friendlyParty.Characters.Count; i++)

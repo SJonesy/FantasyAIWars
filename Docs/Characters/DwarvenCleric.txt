@@ -1,0 +1,36 @@
+﻿  - name: Dwarven Cleric
+    race: !Dwarf {}
+    abilities: 
+      - !BurstHeal {}
+      - !MassHeal {}
+      - !Heal {}
+      - !MassBurstHeal {}
+    script: |
+      local badlyHurtAllies = 0
+      for i=0,friendlyPartyCount-1 do 
+        if friendlyParty[i].IsAlive and friendlyParty[i].HitPoints < friendlyParty[i].MaxHitPoints - 50 then 
+          badlyHurtAllies = badlyHurtAllies + 1
+        end
+      end
+      if badlyHurtAllies > 2 then
+        action = "massburstheal,friendlyparty"
+        return
+      end
+      local hurtAllies = 0
+      for i=0,friendlyPartyCount-1 do 
+        if friendlyParty[i].IsAlive and friendlyParty[i].HitPoints < friendlyParty[i].MaxHitPoints - 20 then 
+          hurtAllies = hurtAllies + 1
+        end
+      end
+      if hurtAllies > 2 then
+        action = "massheal,friendlyparty"
+        return
+      end
+      if lowestHealthFriendly.HitPoints < lowestHealthFriendly.MaxHitPoints - 50 then
+        action = "burstheal,friend " .. tostring(lowestHealthFriendly.CharacterIndex)
+        return
+      end
+      if lowestHealthFriendly.HitPoints < lowestHealthFriendly.MaxHitPoints - 20 then
+        action = "heal,friend " .. tostring(lowestHealthFriendly.CharacterIndex)
+        return
+      end

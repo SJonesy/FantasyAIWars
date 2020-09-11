@@ -36,35 +36,33 @@ characters:
         action = "maul,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
         return
       end
-  - name: Human Fighter
+  - name: Human Mage
     race: !Human {}
     abilities: 
-      - !HeavyCrossbow {}
       - !Shield {}
-      - !Sword {}
+      - !Tough {}
       - !Athletic {}
+      - !MagicMissile {}
     script: |
-      if actor.EngagedWith and actor.EngagedWith.IsAlive then
-        action = "sword,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
-        return
-      end
-      if lowestHealthEnemy then
-        action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
-        return
-      end      
+      action = "magicmissile,enemyparty"
+      return
   - name: Human Ranger
     race: !Human {}
     abilities: 
       - !HeavyCrossbow {}
-      - !Shield {}
-      - !Tough {}
       - !GustOfWind {}
+      - !Tough {}
+      - !MassStoneSkin {}
     script: |
+      if tick == 1 then
+        action = "MassStoneSkin,friendlyparty"
+        return
+      end
       if lowestHealthEnemy.HitPoints < 50 then
         action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
         return
       end
-      action = "gustofwind,enemyparty"
+      action = "GustOfWind,enemyparty"
   - name: Dwarven Cleric
     race: !Dwarf {}
     abilities: 

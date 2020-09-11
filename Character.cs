@@ -49,6 +49,8 @@ namespace FantasyAIWars
         public Ability AbilityInUse = null;
         public Character EngagedWith = null;
         public Character IsGuardedBy = null;
+        public HashSet<StatusEffect> Buffs = null;
+        public HashSet<StatusEffect> Debuffs = null;
 
         public Character() { }
 
@@ -63,6 +65,8 @@ namespace FantasyAIWars
             HitPoints = MaxHitPoints;
             MaxMana += Stats.Intelligence * 4;
             Mana = MaxMana;
+            Buffs = new HashSet<StatusEffect>();
+            Debuffs = new HashSet<StatusEffect>();
             return true;
         }
 
@@ -80,6 +84,12 @@ namespace FantasyAIWars
         public void DoDamage(Action action, int damage, bool disableOutput = false)
         {
             damage = ApplyResists(damage, action.Ability.DamageType);
+
+            if (Buffs.Contains(StatusEffect.StoneSkin) && action.Ability.Type == AbilityType.Melee)
+            {
+                damage = (int)(damage / 2);
+            }
+
             HitPoints -= (int)damage;
 
             if (!disableOutput)
@@ -92,6 +102,11 @@ namespace FantasyAIWars
 
             if (!disableOutput)
                 action.Ability.DoOutput(action, healing, this);
+        }
+
+        public void AddBuff(StatusEffect buff)
+        {
+            Buffs.Add(buff);
         }
 
         private int ApplyResists(float damage, DamageType damageType)
@@ -127,9 +142,9 @@ namespace FantasyAIWars
             {
                 outputColor = Color.LightGray;
             }
-
-            string output = String.Format("{0} ({1}/{2}hp {3}/{4}mp)\tBuild: {5} [{6}]",
-                Name, HitPoints, MaxHitPoints, Mana, MaxMana, Race.ToString(), string.Join(", ", Abilities));
+            string characterPart = String.Format("{0} ({1}/{2}hp {3}/{4}mp)", Name, HitPoints, MaxHitPoints, Mana, MaxMana);
+            string buildPart = String.Format("Build: {0} [{1}]", Race.ToString(), string.Join(", ", Abilities));
+            string output = String.Format("{0,-40}{1,40}", characterPart, buildPart);
             Console.WriteLine(output, outputColor);
         }
     }

@@ -32,7 +32,7 @@ namespace FantasyAIWars.Abilities
         public override void DoAbility(Action action)
         {
             // (15 to 20) + (1 to Intelligence)
-            double totalDamage = action.Actor.Random.Next(20, 24) + (action.Actor.Stats.Intelligence * action.Actor.Random.NextDouble());
+            double totalDamage = action.Actor.Random.Next(22, 26) + (action.Actor.Stats.Intelligence * action.Actor.Random.NextDouble());
             List<Character> aliveEnemies = action.TargetParty.Characters.FindAll(c => c.IsAlive);
             int individualDamage = (int)(totalDamage / aliveEnemies.Count);
 
