@@ -102,6 +102,12 @@ namespace FantasyAIWars
                 damage = (int)(damage / 2);
             }
 
+            if (Buffs.Contains(StatusEffect.MagicShield) 
+                && (action.Ability.Type == AbilityType.AttackSpell || action.Ability.Type == AbilityType.Attack))
+            {
+                damage = (int)(damage / 2);
+            }
+
             HitPoints -= (int)damage;
 
             if (!disableOutput)

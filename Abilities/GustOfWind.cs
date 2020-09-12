@@ -22,7 +22,7 @@ namespace FantasyAIWars.Abilities
             Name = "GustOfWind";
             Delay = 3;
             Cooldown = 3;
-            ManaCost = 7;
+            ManaCost = 9;
             Type = AbilityType.AoE;
             DamageType = DamageType.Air;
             OutputText = "As {actor} finishes casting, {target} is slammed by a gust of wind for {damage}hp.";

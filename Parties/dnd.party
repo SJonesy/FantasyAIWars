@@ -20,14 +20,18 @@ characters:
         action = "Sword,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
         return
       end
-  - name: Dwarven Fighter
+  - name: Dwarven Witchhunter
     race: !Dwarf {}
     abilities: 
       - !Maul {}
       - !Shield {}
-      - !Athletic {}
+      - !MassMagicShield {}
       - !Tough {}
     script: |
+      if actor.ActionCount == 0 then
+        action = "MassMagicShield,friendlyparty"
+        return
+      end
       if actor.EngagedWith and actor.EngagedWith.IsAlive then
         action = "maul,enemy " .. tostring(actor.EngagedWith.CharacterIndex)
         return
@@ -67,10 +71,30 @@ characters:
     race: !Dwarf {}
     abilities: 
       - !BurstHeal {}
-      - !Shield {}
+      - !MassHeal {}
       - !Heal {}
-      - !Tough {}
+      - !MassBurstHeal {}
     script: |
+      local badlyHurtAllies = 0
+      for i=0,friendlyPartyCount-1 do 
+        if friendlyParty[i].IsAlive and friendlyParty[i].HitPoints < friendlyParty[i].MaxHitPoints - 50 then 
+          badlyHurtAllies = badlyHurtAllies + 1
+        end
+      end
+      if badlyHurtAllies > 2 then
+        action = "massburstheal,friendlyparty"
+        return
+      end
+      local hurtAllies = 0
+      for i=0,friendlyPartyCount-1 do 
+        if friendlyParty[i].IsAlive and friendlyParty[i].HitPoints < friendlyParty[i].MaxHitPoints - 20 then 
+          hurtAllies = hurtAllies + 1
+        end
+      end
+      if hurtAllies > 2 then
+        action = "massheal,friendlyparty"
+        return
+      end
       if lowestHealthFriendly.HitPoints < lowestHealthFriendly.MaxHitPoints - 50 then
         action = "burstheal,friend " .. tostring(lowestHealthFriendly.CharacterIndex)
         return
@@ -83,10 +107,30 @@ characters:
     race: !Dwarf {}
     abilities: 
       - !BurstHeal {}
-      - !Shield {}
+      - !MassHeal {}
       - !Heal {}
-      - !Tough {}
+      - !MassBurstHeal {}
     script: |
+      local badlyHurtAllies = 0
+      for i=0,friendlyPartyCount-1 do 
+        if friendlyParty[i].IsAlive and friendlyParty[i].HitPoints < friendlyParty[i].MaxHitPoints - 50 then 
+          badlyHurtAllies = badlyHurtAllies + 1
+        end
+      end
+      if badlyHurtAllies > 2 then
+        action = "massburstheal,friendlyparty"
+        return
+      end
+      local hurtAllies = 0
+      for i=0,friendlyPartyCount-1 do 
+        if friendlyParty[i].IsAlive and friendlyParty[i].HitPoints < friendlyParty[i].MaxHitPoints - 20 then 
+          hurtAllies = hurtAllies + 1
+        end
+      end
+      if hurtAllies > 2 then
+        action = "massheal,friendlyparty"
+        return
+      end
       if lowestHealthFriendly.HitPoints < lowestHealthFriendly.MaxHitPoints - 50 then
         action = "burstheal,friend " .. tostring(lowestHealthFriendly.CharacterIndex)
         return

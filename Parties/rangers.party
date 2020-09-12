@@ -8,7 +8,7 @@ characters:
       - !Tough {}
       - !GustOfWind {}
     script: |
-      if lowestHealthEnemy.HitPoints < 60 then
+      if lowestHealthEnemy and lowestHealthEnemy.HitPoints < 60 then
         action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
         return
       end
@@ -21,7 +21,7 @@ characters:
       - !Tough {}
       - !GustOfWind {}
     script: |
-      if lowestHealthEnemy.HitPoints < 60 then
+      if lowestHealthEnemy and lowestHealthEnemy.HitPoints < 60 then
         action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
         return
       end
@@ -34,7 +34,7 @@ characters:
       - !Tough {}
       - !GustOfWind {}
     script: |
-      if lowestHealthEnemy.HitPoints < 60 then
+      if lowestHealthEnemy and lowestHealthEnemy.HitPoints < 60 then
         action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
         return
       end
@@ -47,7 +47,7 @@ characters:
       - !Tough {}
       - !GustOfWind {}
     script: |
-      if lowestHealthEnemy.HitPoints < 60 then
+      if lowestHealthEnemy and lowestHealthEnemy.HitPoints < 60 then
         action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
         return
       end
@@ -60,7 +60,7 @@ characters:
       - !Tough {}
       - !GustOfWind {}
     script: |
-      if lowestHealthEnemy.HitPoints < 60 then
+      if lowestHealthEnemy and lowestHealthEnemy.HitPoints < 60 then
         action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
         return
       end
@@ -73,7 +73,7 @@ characters:
       - !Heal {}
       - !HeavyCrossbow {}
     script: |
-      if lowestHealthEnemy.HitPoints < 20 then
+      if lowestHealthEnemy and lowestHealthEnemy.HitPoints < 20 then
         action = "HeavyCrossbow,enemy " .. tostring(lowestHealthEnemy.CharacterIndex)
         return
       end

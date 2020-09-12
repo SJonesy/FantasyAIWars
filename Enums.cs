@@ -9,8 +9,11 @@
         AoE,
         Heal,
         GroupBuff,
+        GroupDebuff,
         AttackSpell,
-        Spell
+        Spell,
+        Debuff,
+        Buff
     }
 
     public enum DamageType
@@ -31,7 +34,8 @@
     public enum StatusEffect
     {
         // Buffs
-        StoneSkin
+        StoneSkin,
+        MagicShield
         // Debuffs
     }
 }
